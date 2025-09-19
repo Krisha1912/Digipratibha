@@ -1,0 +1,1122 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Student Skill Visualization Board</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        :root {
+            --primary-color: #4a6fa5;
+            --secondary-color: #6b8cbb;
+            --accent-color: #ff7e5f;
+            --light-color: #f5f7fa;
+            --dark-color: #2c3e50;
+            --success-color: #2ecc71;
+            --warning-color: #f39c12;
+            --danger-color: #e74c3c;
+        }
+        
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+        
+        body {
+            background-color: #f9f9f9;
+            color: var(--dark-color);
+            line-height: 1.6;
+        }
+        
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+        
+        header {
+            text-align: center;
+            margin-bottom: 30px;
+            padding: 20px;
+            background-color: white;
+            border-radius: 10px;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+        }
+        
+        h1 {
+            color: var(--primary-color);
+            margin-bottom: 10px;
+        }
+        
+        .student-info {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            gap: 20px;
+            margin-top: 15px;
+        }
+        
+        .student-avatar {
+            width: 80px;
+            height: 80px;
+            border-radius: 50%;
+            background-color: var(--secondary-color);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-size: 2rem;
+            font-weight: bold;
+        }
+        
+        .controls {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 20px;
+            flex-wrap: wrap;
+            gap: 10px;
+        }
+        
+        .btn-add-skill {
+            background-color: var(--success-color);
+            color: white;
+            padding: 10px 20px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            font-weight: 500;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            transition: background-color 0.3s ease;
+        }
+        
+        .btn-add-skill:hover {
+            background-color: #27ae60;
+        }
+        
+        .skills-container {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+            gap: 20px;
+            margin-bottom: 30px;
+        }
+        
+        .skill-card {
+            background-color: white;
+            border-radius: 10px;
+            padding: 20px;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            transition: transform 0.3s ease;
+            position: relative;
+        }
+        
+        .skill-card:hover {
+            transform: translateY(-5px);
+        }
+        
+        .skill-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 15px;
+        }
+        
+        .skill-title {
+            font-size: 1.2rem;
+            font-weight: 600;
+            color: var(--primary-color);
+        }
+        
+        .skill-icon {
+            width: 40px;
+            height: 40px;
+            background-color: var(--light-color);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: var(--primary-color);
+        }
+        
+        .skill-progress {
+            height: 10px;
+            background-color: var(--light-color);
+            border-radius: 5px;
+            margin-bottom: 10px;
+            overflow: hidden;
+        }
+        
+        .skill-progress-bar {
+            height: 100%;
+            border-radius: 5px;
+            transition: width 0.5s ease;
+        }
+        
+        .skill-info {
+            display: flex;
+            justify-content: space-between;
+            font-size: 0.9rem;
+            color: #777;
+        }
+        
+        .skill-actions {
+            margin-top: 15px;
+            display: flex;
+            gap: 10px;
+        }
+        
+        button {
+            padding: 8px 15px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            font-weight: 500;
+            transition: background-color 0.3s ease;
+        }
+        
+        .btn-increase {
+            background-color: var(--success-color);
+            color: white;
+        }
+        
+        .btn-decrease {
+            background-color: var(--danger-color);
+            color: white;
+        }
+        
+        .btn-edit {
+            background-color: var(--secondary-color);
+            color: white;
+        }
+        
+        .btn-delete {
+            background-color: var(--danger-color);
+            color: white;
+            position: absolute;
+            top: 10px;
+            right: 10px;
+            width: 30px;
+            height: 30px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 0;
+        }
+        
+        .overall-progress {
+            background-color: white;
+            border-radius: 10px;
+            padding: 20px;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            margin-bottom: 30px;
+        }
+        
+        .overall-progress h2 {
+            text-align: center;
+            margin-bottom: 20px;
+            color: var(--primary-color);
+        }
+        
+        .progress-chart {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 200px;
+        }
+        
+        .chart-container {
+            position: relative;
+            width: 200px;
+            height: 200px;
+        }
+        
+        .chart-center {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            text-align: center;
+        }
+        
+        .chart-value {
+            font-size: 2rem;
+            font-weight: bold;
+            color: var(--primary-color);
+        }
+        
+        .chart-label {
+            font-size: 0.9rem;
+            color: #777;
+        }
+        
+        .modal {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.5);
+            justify-content: center;
+            align-items: center;
+            z-index: 1000;
+        }
+        
+        .modal-content {
+            background-color: white;
+            padding: 30px;
+            border-radius: 10px;
+            width: 90%;
+            max-width: 500px;
+            max-height: 90vh;
+            overflow-y: auto;
+        }
+        
+        .modal-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 20px;
+        }
+        
+        .close-modal {
+            background: none;
+            border: none;
+            font-size: 1.5rem;
+            cursor: pointer;
+            color: #777;
+        }
+        
+        .form-group {
+            margin-bottom: 15px;
+        }
+        
+        label {
+            display: block;
+            margin-bottom: 5px;
+            font-weight: 500;
+        }
+        
+        input, select {
+            width: 100%;
+            padding: 10px;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+        }
+        
+        .btn-save {
+            background-color: var(--primary-color);
+            color: white;
+            width: 100%;
+            padding: 12px;
+            margin-top: 10px;
+        }
+        
+        .empty-state {
+            text-align: center;
+            padding: 40px;
+            background-color: white;
+            border-radius: 10px;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            grid-column: 1 / -1;
+        }
+        
+        .empty-state i {
+            font-size: 3rem;
+            color: #ddd;
+            margin-bottom: 15px;
+        }
+        
+        .empty-state p {
+            color: #777;
+            margin-bottom: 20px;
+        }
+        
+        @media (max-width: 768px) {
+            .skills-container {
+                grid-template-columns: 1fr;
+            }
+            
+            .student-info {
+                flex-direction: column;
+                gap: 10px;
+            }
+            
+            .controls {
+                flex-direction: column;
+            }
+        }
+        /* --- Footer --- */
+.footer {
+    background-color: #2c3e50;
+    color: #fff;
+    padding: 50px 5%;
+}
+
+body.dark-mode .footer {
+    background-color: #0d121c;
+}
+
+.footer-container {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+    gap: 30px;
+    text-align: left;
+}
+
+.footer-col {
+    flex: 1;
+    min-width: 200px;
+}
+
+.footer-logo {
+    font-size: 1.8rem;
+    font-weight: 700;
+    margin-bottom: 15px;
+    color: var(--primary-color);
+}
+
+.footer-col p {
+    font-size: 0.9rem;
+    color: #ccc;
+    line-height: 1.8;
+}
+
+.social-links a {
+    color: #fff;
+    font-size: 1.2rem;
+    margin-right: 15px;
+    transition: color 0.3s ease;
+}
+
+
+:root {
+            --bg-color: #f4e8ff;
+            --text-color: #4a4a6a;
+            --card-bg-color: #ffffff;
+            --primary-color: #8a2be2;
+            --secondary-color: #ff69b4;
+            --shadow-light: rgba(138, 43, 226, 0.15);
+            --shadow-dark: rgba(138, 43, 226, 0.25);
+            --aura-light: 0 0 20px rgba(138, 43, 226, 0.3), 0 0 40px rgba(138, 43, 226, 0.2);
+            --glass-bg-color: rgba(255, 255, 255, 0.25);
+            --glass-border-color: rgba(255, 255, 255, 0.4);
+            --glass-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.1);
+        }
+
+        body.dark-mode {
+            --bg-color: #0a0e1a;
+            --text-color: #e0e0e0;
+            --card-bg-color: #1a1a1a;
+            --primary-color: #00bfff;
+            --secondary-color: #ff007f;
+            --shadow-light: rgba(0, 191, 255, 0.15);
+            --shadow-dark: rgba(0, 191, 255, 0.25);
+            --aura-light: 0 0 20px #00bfff, 0 0 40px #00bfff, 0 0 60px #ff007f, 0 0 80px #ff007f;
+            --glass-bg-color: rgba(26, 26, 26, 0.4);
+            --glass-border-color: rgba(255, 255, 255, 0.1);
+            --glass-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.1);
+        }
+        
+/* --- Navigation Bar --- */
+.navbar {
+    display: flex;
+    justify-content: space-evenly;
+    align-items: center;
+    padding: 15px 5%;
+    background-color: var(--card-bg-color);
+    box-shadow: 0 2px 10px var(--shadow-light);
+    /* position: fixed; */
+    width: 100%;
+    top: 0;
+    left: 0;
+    z-index: 1000;
+}
+
+body {
+    font-family: 'Poppins', sans-serif;
+    line-height: 1.6;
+    color: var(--text-color);
+    background-color: var(--bg-color);
+    transition: background-color 0.3s, color 0.3s;
+}
+
+h1, h2, h3, h4 {
+    font-weight: 600;
+    line-height: 1.2;
+}
+
+a {
+    text-decoration: none;
+    color: inherit;
+    transition: color 0.3s;
+}
+
+button, .cta-button, .login-btn, .signup-btn, .guest-link {
+    cursor: pointer;
+    font-family: 'Poppins', sans-serif;
+    padding: 12px 24px;
+    border: none;
+    border-radius: 50px;
+    font-weight: 500;
+    transition: all 0.3s ease;
+}
+.btnnnn{
+    padding-top: 20px;
+    text-align: center;
+}
+.logo {
+    display: flex;
+    align-items: center;
+    font-size: 1.5rem;
+    font-weight: 700;
+    color: var(--primary-color);
+}
+
+.logo i {
+    font-size: 1.8rem;
+    margin-right: 8px;
+    color: var(--primary-color);
+}
+
+.nav-links a {
+    margin: 0 15px;
+    color: var(--text-color);
+    font-weight: 500;
+    opacity: 0.8;
+}
+
+.nav-links a:hover, .nav-links a.active {
+    color: var(--primary-color);
+    opacity: 1;
+    transform: translateY(-2px);
+}
+
+.auth-buttons {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.toggle-icon {
+    font-size: 1.5rem;
+    cursor: pointer;
+    color: var(--text-color);
+    transition: color 0.3s;
+    animation: bounce-in 0.5s ease-out;
+}
+
+.auth-buttons .login-btn {
+    background: none;
+    color: var(--primary-color);
+    border: 2px solid var(--primary-color);
+    margin-right: 10px;
+}
+
+.auth-buttons .login-btn:hover {
+    background-color: var(--primary-color);
+    color: #fff;
+    transform: scale(1.05);
+}
+
+.auth-buttons .signup-btn {
+    background-color: var(--secondary-color);
+    color: #fff;
+    border: 2px solid var(--secondary-color);
+}
+
+.auth-buttons .signup-btn:hover {
+    background-color: #d62b5d;
+    border-color: #d62b5d;
+    transform: scale(1.05);
+}
+/* --- Footer --- */
+.footer {
+    background-color: #2c3e50;
+    color: #fff;
+    padding: 50px 5%;
+}
+
+body.dark-mode .footer {
+    background-color: #0d121c;
+}
+
+.footer-container {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+    gap: 30px;
+    text-align: left;
+}
+
+.footer-col {
+    flex: 1;
+    min-width: 200px;
+}
+
+.footer-logo {
+    font-size: 1.8rem;
+    font-weight: 700;
+    margin-bottom: 15px;
+    color: var(--primary-color);
+}
+
+.footer-col p {
+    font-size: 0.9rem;
+    color: #ccc;
+    line-height: 1.8;
+}
+
+.social-links a {
+    color: #fff;
+    font-size: 1.2rem;
+    margin-right: 15px;
+    transition: color 0.3s ease;
+}
+
+.social-links a:hover {
+    color: var(--primary-color);
+    transform: scale(1.2);
+}
+
+.footer-col h4 {
+    font-size: 1.1rem;
+    margin-bottom: 20px;
+    color: #fff;
+    position: relative;
+}
+
+.footer-col h4::before {
+    content: '';
+    position: absolute;
+    left: 0;
+    bottom: -5px;
+    height: 2px;
+    width: 40px;
+    background-color: var(--primary-color);
+}
+
+.footer-col ul {
+    list-style: none;
+}
+
+.footer-col ul li:not(:last-child) {
+    margin-bottom: 10px;
+}
+
+.footer-col ul li a {
+    font-size: 0.9rem;
+    color: #ccc;
+    transition: color 0.3s ease;
+}
+
+.footer-col ul li a:hover {
+    color: #fff;
+}
+.social-links a:hover {
+    color: var(--primary-color);
+    transform: scale(1.2);
+}
+
+.footer-col h4 {
+    font-size: 1.1rem;
+    margin-bottom: 20px;
+    color: #fff;
+    position: relative;
+}
+
+.footer-col h4::before {
+    content: '';
+    position: absolute;
+    left: 0;
+    bottom: -5px;
+    height: 2px;
+    width: 40px;
+    background-color: var(--primary-color);
+}
+
+.footer-col ul {
+    list-style: none;
+}
+
+.footer-col ul li:not(:last-child) {
+    margin-bottom: 10px;
+}
+
+.footer-col ul li a {
+    font-size: 0.9rem;
+    color: #ccc;
+    transition: color 0.3s ease;
+}
+
+.footer-col ul li a:hover {
+    color: #fff;
+}
+        /* --- Responsive Design --- */
+@media (max-width: 768px) {
+    .navbar {
+        flex-direction: column;
+        align-items: center;
+        padding-bottom: 10px;
+    }
+    .nav-links {
+        margin-top: 10px;
+    }
+    .auth-buttons {
+        margin-top: 10px;
+    }
+    .hero-content h1 {
+        font-size: 2.5rem;
+    }
+    .hero-buttons {
+        display: flex;
+        flex-direction: column;
+        gap: 15px;
+    }
+    .hero-buttons button {
+        width: 100%;
+    }
+    .reviews-container, .faq-container {
+        flex-direction: column;
+        align-items: center;
+    }
+    .review-card {
+        margin-bottom: 20px;
+    }
+    .footer-container {
+        flex-direction: column;
+        align-items: center;
+    }
+    .about-content {
+        flex-direction: column;
+        gap: 20px;
+    }
+    .about-image {
+        min-height: 250px;
+        width: 100%;
+    }
+}
+    </style>
+</head>
+<body>
+    <header class="navbar">
+        <div class="logo">
+            <i class="fa-solid fa-graduation-cap"></i>
+            <span>DigiPratibha</span>
+        </div>
+        <nav class="nav-links">
+            <a href="home.html">Home</a>
+            <a href="templates.html">Templates</a>
+            <a href="ai_generate.html">ai_generate</a>
+            <a href="build_portfolio.html">build portfolio</a>
+            <a href="blogs.html">blogs</a>
+            <!-- <a href="#">My Portfo</a> -->
+        </nav>
+        <div class="auth-buttons">
+            <i id="theme-toggle" class="fas fa-sun toggle-icon"></i>
+            <a href="http://localhost:3000/login.html" class="login-btn">Login</a>
+            <a href="signup.html" class="signup-btn">Sign Up</a>
+        </div>
+    </header>
+    <div class="container">
+        <header>
+            <h1>Student Skill Visualization Board</h1>
+            <p>Track and visualize your learning progress</p>
+            <div class="student-info">
+                <div class="student-avatar">JS</div>
+                <div>
+                    <h2>John Smith</h2>
+                    <p>Computer Science Major</p>
+                </div>
+            </div>
+        </header>
+        
+        <div class="controls">
+            <button class="btn-add-skill" id="btnAddSkill">
+                <i class="fas fa-plus"></i> Add New Skill
+            </button>
+        </div>
+        
+        <section class="overall-progress">
+            <h2>Overall Skill Progress</h2>
+            <div class="progress-chart">
+                <div class="chart-container">
+                    <canvas id="overallChart"></canvas>
+                    <div class="chart-center">
+                        <div class="chart-value" id="overallPercentage">0%</div>
+                        <div class="chart-label">Mastery</div>
+                    </div>
+                </div>
+            </div>
+        </section>
+        
+        <section class="skills-container" id="skillsContainer">
+            <!-- Skills will be dynamically added here -->
+        </section>
+    </div>
+    
+    <!-- Add Skill Modal -->
+    <div class="modal" id="addModal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h2>Add New Skill</h2>
+                <button class="close-modal">&times;</button>
+            </div>
+            <form id="addForm">
+                <div class="form-group">
+                    <label for="addSkillName">Skill Name</label>
+                    <input type="text" id="addSkillName" required>
+                </div>
+                <div class="form-group">
+                    <label for="addSkillLevel">Skill Level (0-100)</label>
+                    <input type="number" id="addSkillLevel" min="0" max="100" required>
+                </div>
+                <div class="form-group">
+                    <label for="addSkillCategory">Category</label>
+                    <select id="addSkillCategory">
+                        <option value="technical">Technical</option>
+                        <option value="soft">Soft Skills</option>
+                        <option value="language">Languages</option>
+                        <option value="other">Other</option>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label for="addSkillIcon">Icon (1-2 characters)</label>
+                    <input type="text" id="addSkillIcon" maxlength="2" required>
+                </div>
+                <button type="submit" class="btn-save">Add Skill</button>
+            </form>
+        </div>
+    </div>
+    
+    <!-- Edit Skill Modal -->
+    <div class="modal" id="editModal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h2>Edit Skill</h2>
+                <button class="close-modal">&times;</button>
+            </div>
+            <form id="editForm">
+                <input type="hidden" id="editIndex">
+                <div class="form-group">
+                    <label for="editSkillName">Skill Name</label>
+                    <input type="text" id="editSkillName" required>
+                </div>
+                <div class="form-group">
+                    <label for="editSkillLevel">Skill Level (0-100)</label>
+                    <input type="number" id="editSkillLevel" min="0" max="100" required>
+                </div>
+                <div class="form-group">
+                    <label for="editSkillCategory">Category</label>
+                    <select id="editSkillCategory">
+                        <option value="technical">Technical</option>
+                        <option value="soft">Soft Skills</option>
+                        <option value="language">Languages</option>
+                        <option value="other">Other</option>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label for="editSkillIcon">Icon (1-2 characters)</label>
+                    <input type="text" id="editSkillIcon" maxlength="2" required>
+                </div>
+                <button type="submit" class="btn-save">Save Changes</button>
+            </form>
+        </div>
+    </div>
+    <footer class="footer">
+            <div class="footer-container">
+                <div class="footer-col">
+                    <div class="footer-logo">DigiPratibha</div>
+                    <p>The leading digital portfolio platform for students across India.</p>
+                    <div class="social-links">
+                        <a href="https://www.facebook.com"><i class="fab fa-facebook-f"></i></a>
+                        <a href="https://twitter.com"><i class="fab fa-twitter"></i></a>
+                        <a href="https://instagram.com"><i class="fab fa-instagram"></i></a>
+                        <a href="https://in.linkedin..com"><i class="fab fa-linkedin-in"></i></a>
+                    </div>
+                </div>
+                <div class="footer-col">
+                    <h4>Features</h4>
+                    <ul>
+                        <li><a href="drag_drop.html">Drag-and-Drop Builder</a></li>
+                        <li><a href="templates.html">Templates</a></li>
+                        <li><a href="drag_drop.html">Content Integration</a></li>
+                        <li><a href="drag_drop.html">One-Click Hosting</a></li>
+                        <li><a href="drag_drop.html">PDF Export</a></li>
+                    </ul>
+                </div>
+                <div class="footer-col">
+                    <h4>Resources</h4>
+                    <ul>
+                        <li><a href="blogs.html">Blog</a></li>
+                        <li><a href="blogs.html">Tutorials</a></li>
+                        <li><a href="blogs.html">Documentation</a></li>
+                        <li><a href="blogs.html">Support</a></li>
+                    </ul>
+                </div>
+                <div class="footer-col">
+                    <h4>Company</h4>
+                    <ul>
+                        <li><a href="blogs.html">About Us</a></li>
+                        <li><a href="blogs.html">Careers</a></li>
+                        <li><a href="build_portfolio.html">Contact Us</a></li>
+                        <li><a href="login.html">Privacy Policy</a></li>
+                        <li><a href="login.html">Terms of Service</a></li>
+                    </ul>
+                </div>
+            </div>
+        </footer>
+
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script>
+        // Sample initial skills data
+        let skills = [
+            { name: "JavaScript", level: 75, category: "technical", icon: "JS" },
+            { name: "HTML/CSS", level: 85, category: "technical", icon: "</>" },
+            { name: "Python", level: 60, category: "technical", icon: "Py" },
+            { name: "Communication", level: 80, category: "soft", icon: "💬" },
+            { name: "Teamwork", level: 90, category: "soft", icon: "👥" },
+            { name: "Problem Solving", level: 70, category: "soft", icon: "🧩" }
+        ];
+        
+        // DOM Elements
+        const skillsContainer = document.getElementById('skillsContainer');
+        const overallPercentage = document.getElementById('overallPercentage');
+        const addModal = document.getElementById('addModal');
+        const editModal = document.getElementById('editModal');
+        const addForm = document.getElementById('addForm');
+        const editForm = document.getElementById('editForm');
+        const closeModalBtns = document.querySelectorAll('.close-modal');
+        const editIndexInput = document.getElementById('editIndex');
+        const btnAddSkill = document.getElementById('btnAddSkill');
+        
+        // Initialize Chart.js
+        const ctx = document.getElementById('overallChart').getContext('2d');
+        let overallChart = new Chart(ctx, {
+            type: 'doughnut',
+            data: {
+                labels: ['Completed', 'Remaining'],
+                datasets: [{
+                    data: [0, 100],
+                    backgroundColor: [
+                        '#4a6fa5',
+                        '#f5f7fa'
+                    ],
+                    borderWidth: 0
+                }]
+            },
+            options: {
+                cutout: '70%',
+                responsive: true,
+                maintainAspectRatio: true,
+                plugins: {
+                    legend: {
+                        display: false
+                    },
+                    tooltip: {
+                        enabled: false
+                    }
+                }
+            }
+        });
+        
+        // Functions
+        function renderSkills() {
+            skillsContainer.innerHTML = '';
+            
+            if (skills.length === 0) {
+                skillsContainer.innerHTML = `
+                    <div class="empty-state">
+                        <i class="fas fa-clipboard-list"></i>
+                        <h3>No Skills Added Yet</h3>
+                        <p>Add your first skill to start tracking your progress</p>
+                        <button class="btn-add-skill" id="btnAddEmptySkill">
+                            <i class="fas fa-plus"></i> Add Your First Skill
+                        </button>
+                    </div>
+                `;
+                
+                document.getElementById('btnAddEmptySkill').addEventListener('click', openAddModal);
+                overallPercentage.textContent = '0%';
+                overallChart.data.datasets[0].data = [0, 100];
+                overallChart.update();
+                return;
+            }
+            
+            skills.forEach((skill, index) => {
+                const skillCard = document.createElement('div');
+                skillCard.className = 'skill-card';
+                
+                // Determine progress bar color based on level
+                let progressColor;
+                if (skill.level < 40) {
+                    progressColor = 'var(--danger-color)';
+                } else if (skill.level < 70) {
+                    progressColor = 'var(--warning-color)';
+                } else {
+                    progressColor = 'var(--success-color)';
+                }
+                
+                skillCard.innerHTML = `
+                    <button class="btn-delete" data-index="${index}">
+                        <i class="fas fa-times"></i>
+                    </button>
+                    <div class="skill-header">
+                        <div class="skill-title">${skill.name}</div>
+                        <div class="skill-icon">${skill.icon}</div>
+                    </div>
+                    <div class="skill-progress">
+                        <div class="skill-progress-bar" style="width: ${skill.level}%; background-color: ${progressColor};"></div>
+                    </div>
+                    <div class="skill-info">
+                        <span>${skill.category}</span>
+                        <span>${skill.level}% mastered</span>
+                    </div>
+                    <div class="skill-actions">
+                        <button class="btn-increase" data-index="${index}">+</button>
+                        <button class="btn-decrease" data-index="${index}">-</button>
+                        <button class="btn-edit" data-index="${index}">Edit</button>
+                    </div>
+                `;
+                
+                skillsContainer.appendChild(skillCard);
+            });
+            
+            // Add event listeners to buttons
+            document.querySelectorAll('.btn-increase').forEach(btn => {
+                btn.addEventListener('click', (e) => {
+                    const index = e.target.getAttribute('data-index');
+                    increaseSkillLevel(index);
+                });
+            });
+            
+            document.querySelectorAll('.btn-decrease').forEach(btn => {
+                btn.addEventListener('click', (e) => {
+                    const index = e.target.getAttribute('data-index');
+                    decreaseSkillLevel(index);
+                });
+            });
+            
+            document.querySelectorAll('.btn-edit').forEach(btn => {
+                btn.addEventListener('click', (e) => {
+                    const index = e.target.getAttribute('data-index');
+                    openEditModal(index);
+                });
+            });
+            
+            document.querySelectorAll('.btn-delete').forEach(btn => {
+                btn.addEventListener('click', (e) => {
+                    const index = e.target.getAttribute('data-index');
+                    deleteSkill(index);
+                });
+            });
+            
+            updateOverallProgress();
+        }
+        
+        function increaseSkillLevel(index) {
+            if (skills[index].level < 100) {
+                skills[index].level += 5;
+                if (skills[index].level > 100) skills[index].level = 100;
+                renderSkills();
+            }
+        }
+        
+        function decreaseSkillLevel(index) {
+            if (skills[index].level > 0) {
+                skills[index].level -= 5;
+                if (skills[index].level < 0) skills[index].level = 0;
+                renderSkills();
+            }
+        }
+        
+        function deleteSkill(index) {
+            if (confirm('Are you sure you want to delete this skill?')) {
+                skills.splice(index, 1);
+                renderSkills();
+            }
+        }
+        
+        function openAddModal() {
+            addForm.reset();
+            addModal.style.display = 'flex';
+        }
+        
+        function openEditModal(index) {
+            const skill = skills[index];
+            editIndexInput.value = index;
+            document.getElementById('editSkillName').value = skill.name;
+            document.getElementById('editSkillLevel').value = skill.level;
+            document.getElementById('editSkillCategory').value = skill.category;
+            document.getElementById('editSkillIcon').value = skill.icon;
+            editModal.style.display = 'flex';
+        }
+        
+        function closeModals() {
+            addModal.style.display = 'none';
+            editModal.style.display = 'none';
+        }
+        
+        function updateOverallProgress() {
+            const totalLevel = skills.reduce((sum, skill) => sum + skill.level, 0);
+            const averageLevel = Math.round(totalLevel / skills.length);
+            
+            overallPercentage.textContent = `${averageLevel}%`;         
+            
+            // Update chart
+            overallChart.data.datasets[0].data = [averageLevel, 100 - averageLevel];
+            overallChart.update();
+        }
+        
+        // Event Listeners
+        btnAddSkill.addEventListener('click', openAddModal);
+        
+        closeModalBtns.forEach(btn => {
+            btn.addEventListener('click', closeModals);
+        });
+        
+        addForm.addEventListener('submit', (e) => {
+            e.preventDefault();
+            
+            const newSkill = {
+                name: document.getElementById('addSkillName').value,
+                level: parseInt(document.getElementById('addSkillLevel').value),
+                category: document.getElementById('addSkillCategory').value,
+                icon: document.getElementById('addSkillIcon').value
+            };
+            
+            skills.push(newSkill);
+            renderSkills();
+            closeModals();
+        });
+        
+        editForm.addEventListener('submit', (e) => {
+            e.preventDefault();
+            
+            const index = editIndexInput.value;
+            skills[index].name = document.getElementById('editSkillName').value;
+            skills[index].level = parseInt(document.getElementById('editSkillLevel').value);
+            skills[index].category = document.getElementById('editSkillCategory').value;
+            skills[index].icon = document.getElementById('editSkillIcon').value;
+            
+            renderSkills();
+            closeModals();
+        });
+        
+        // Close modals when clicking outside
+        window.addEventListener('click', (e) => {
+            if (e.target === addModal || e.target === editModal) {
+                closeModals();
+            }
+        });
+        
+        // Initialize the app
+        renderSkills();
+    </script>
+</body>
+</html>

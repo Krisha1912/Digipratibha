@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>DigiPratibha - Portfolio Generator</title>
+  <link rel="stylesheet" href="generate.css">
+</head>
+<body>
+    <header class="navbar">
+        <div class="logo">
+            <i class="fa-solid fa-graduation-cap"></i>
+            <span>DigiPratibha</span>
+        </div>
+        <nav class="nav-links">
+            <a href="home.html">Home</a>
+            <a href="templates.html">Templates</a>
+            <a href="ai_generate.html">ai_generate</a>
+            <a href="build_portfolio.html">build portfolio</a>
+            <a href="blogs.html">blogs</a>
+        </nav>
+        <div class="auth-buttons">
+            <i id="theme-toggle" class="fas fa-sun toggle-icon"></i>
+            <a href="login.html" class="login-btn">Login</a>
+            <a href="signup.html" class="signup-btn">Sign Up</a>
+        </div>
+    </header>
+
+    <div class="form-container">
+        <h2>Portfolio Generator</h2>
+        <label>Name:</label>
+        <input type="text" id="name" placeholder="Enter your name"/>
+        
+        <label>Email:</label>
+        <input type="email" id="email" placeholder="Enter your email"/>
+        
+        <label>About:</label>
+        <textarea id="about" placeholder="Write about yourself"></textarea>
+        
+        <label>Skills (comma separated):</label>
+        <input type="text" id="skills" placeholder="e.g. HTML, CSS, JS"/>
+
+        <!-- New Sections -->
+        <label>Resume:</label>
+        <textarea id="resume" placeholder="Paste your resume text"></textarea>
+        
+        <label>Bio:</label>
+        <textarea id="bio" placeholder="Write your bio"></textarea>
+        
+        <label>Certificate:</label>
+        <textarea id="certificate" placeholder="List your certificates"></textarea>
+        
+        <!-- Certificate Image Upload -->
+        <label>Certificate Images:</label>
+        <div class="file-upload-wrapper">
+            <input type="file" id="certificateImages" multiple accept="image/*">
+            <div class="upload-icon">
+                <i class="fas fa-cloud-upload-alt"></i>
+            </div>
+            <div class="upload-text">
+                Click to upload certificate images or drag and drop
+            </div>
+        </div>
+        <div id="imagePreview"></div>
+        
+        <label>Education:</label>
+        <textarea id="education" placeholder="Write your education details"></textarea>
+        
+        <label>Projects:</label>
+        <textarea id="projects" placeholder="List your projects"></textarea>
+        
+        <label>Experience / Fresher:</label>
+        <textarea id="experience" placeholder="Write your experience or Fresher"></textarea>
+        
+        <label>Contact:</label>
+        <textarea id="contact" placeholder="Provide contact details"></textarea>
+        
+        <label>Hobbies:</label>
+        <textarea id="hobbies" placeholder="Write your hobbies"></textarea>
+
+        <label>Template:</label>
+        <select id="template">
+            <option value="modern">Modern</option>
+            <option value="classic">Classic</option>
+            <option value="minimal">Minimal</option>
+        </select>
+        
+        <button onclick="generatePortfolio()">Generate Portfolio</button>
+        
+        <div class="btn-group">
+            <button onclick="downloadHTML()">Download HTML</button>
+            <button onclick="downloadPDF()">Download PDF</button>
+            <button onclick="shareLink()">Share Link</button>
+        </div>
+    </div>
+
+    <div class="preview-container">
+        <h2>Preview</h2>
+        <div id="portfolioOutput" class="portfolio"></div>
+    </div>
+
+
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.10.1/html2pdf.bundle.min.js"></script>
+
+  <script src="generate.js"></script>
+</body>
+</html>

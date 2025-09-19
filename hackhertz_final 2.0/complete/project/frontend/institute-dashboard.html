@@ -1,0 +1,112 @@
+ <!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Institute Dashboard - Digital Portfolio Platform</title>
+  <link rel="stylesheet" href="css/style.css">
+  <link rel="stylesheet" href="css/dashboard.css">
+</head>
+<body>
+  <div class="dashboard">
+    <!-- Sidebar -->
+    <div class="sidebar">
+      <div class="sidebar-brand">
+        <h2>Institute Portal</h2>
+      </div>
+      <ul class="sidebar-menu">
+        <li><a href="#" class="nav-link active" data-section="dashboard">Dashboard</a></li>
+        <li><a href="#" class="nav-link" data-section="students">Manage Students</a></li>
+        <li><a href="#" class="nav-link" data-section="portfolios">View Portfolios</a></li>
+        <li><a href="#" id="logoutBtn">Logout</a></li>
+      </ul>
+    </div>
+    
+    <!-- Main Content -->
+    <div class="main-content">
+      <!-- Topbar -->
+      <div class="topbar">
+        <h3>Institute Dashboard</h3>
+        <div class="user-info">
+          <span id="userName">Institute Admin</span>
+          <span id="userEmail">institute@example.com</span>
+        </div>
+      </div>
+      
+      <!-- Content -->
+      <div class="content">
+        <!-- Dashboard Section -->
+        <div id="dashboard" class="dashboard-section active">
+          <h2 class="card-title">Institute Overview</h2>
+          
+          <div class="stats-grid">
+            <div class="stat-card">
+              <h3 id="totalStudents">0</h3>
+              <p>Total Students</p>
+            </div>
+            <div class="stat-card">
+              <h3 id="approvedStudents">0</h3>
+              <p>Approved Students</p>
+            </div>
+            <div class="stat-card">
+              <h3>0</h3>
+              <p>Portfolios Reviewed</p>
+            </div>
+          </div>
+          
+          <div class="card">
+            <div class="card-header">
+              <h3>Recent Activity</h3>
+            </div>
+            <div class="card-body">
+              <p>No recent activity. (Placeholder)</p>
+            </div>
+          </div>
+        </div>
+        
+        <!-- Students Section -->
+        <div id="students" class="dashboard-section">
+          <div class="card">
+            <div class="card-header">
+              <h3>Manage Students</h3>
+            </div>
+            <div class="card-body">
+              <div id="studentsList">
+                <p>Loading students...</p>
+              </div>
+            </div>
+          </div>
+        </div>
+        
+        <!-- Portfolios Section -->
+        <div id="portfolios" class="dashboard-section">
+          <div class="card">
+            <div class="card-header">
+              <h3>Student Portfolios</h3>
+            </div>
+            <div class="card-body">
+              <div class="form-group">
+                <label for="searchStudent">Search Students:</label>
+                <input type="text" id="searchStudent" placeholder="Search by name or skills">
+              </div>
+              
+              <div class="placeholder-feature">
+                <h4>Portfolio Browser</h4>
+                <p>This section would display student portfolios for review.</p>
+                <p>Institute users could filter, search, and view student portfolios.</p>
+              </div>
+              
+              <div class="drag-drop-area">
+                <div class="upload-icon">📊</div>
+                <p>Export student data as CSV or Excel (Placeholder)</p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <script src="js/dashboard.js"></script>
+</body>
+</html>

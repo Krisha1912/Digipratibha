@@ -1,0 +1,1292 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Portfolio Generator Pro</title>
+    <!-- Add Font Awesome for icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <style>
+        /* General Styling & Reset */
+        :root {
+            --bg-color: #f4e8ff;
+            --text-color: #4a4a6a;
+            --card-bg-color: #ffffff;
+            --primary-color: #8a2be2;
+            --secondary-color: #ff69b4;
+            --shadow-light: rgba(138, 43, 226, 0.15);
+            --shadow-dark: rgba(138, 43, 226, 0.25);
+            --aura-light: 0 0 20px rgba(138, 43, 226, 0.3), 0 0 40px rgba(138, 43, 226, 0.2);
+            --glass-bg-color: rgba(255, 255, 255, 0.25);
+            --glass-border-color: rgba(255, 255, 255, 0.4);
+            --glass-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.1);
+        }
+
+        body.dark-mode {
+            --bg-color: #0a0e1a;
+            --text-color: #e0e0e0;
+            --card-bg-color: #1a1a1a;
+            --primary-color: #00bfff;
+            --secondary-color: #ff007f;
+            --shadow-light: rgba(0, 191, 255, 0.15);
+            --shadow-dark: rgba(0, 191, 255, 0.25);
+            --aura-light: 0 0 20px #00bfff, 0 0 40px #00bfff, 0 0 60px #ff007f, 0 0 80px #ff007f;
+            --glass-bg-color: rgba(26, 26, 26, 0.4);
+            --glass-border-color: rgba(255, 255, 255, 0.1);
+            --glass-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.1);
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Poppins', -apple-system, BlinkMacSystemFont, sans-serif;
+            line-height: 1.6;
+            color: var(--text-color);
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            transition: background-color 0.3s, color 0.3s;
+        }
+
+        /* Navigation Bar */
+        .navbar {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 15px 5%;
+            background-color: var(--card-bg-color);
+            box-shadow: 0 2px 10px var(--shadow-light);
+            position: fixed;
+            width: 100%;
+            top: 0;
+            left: 0;
+            z-index: 1000;
+        }
+
+        .logo {
+            display: flex;
+            align-items: center;
+            font-size: 1.5rem;
+            font-weight: 700;
+            color: var(--primary-color);
+        }
+
+        .logo i {
+            font-size: 1.8rem;
+            margin-right: 8px;
+            color: var(--primary-color);
+        }
+
+        .nav-links {
+            display: flex;
+            gap: 20px;
+        }
+
+        .nav-links a {
+            color: var(--text-color);
+            font-weight: 500;
+            text-decoration: none;
+            transition: color 0.3s;
+        }
+
+        .nav-links a:hover {
+            color: var(--primary-color);
+        }
+
+        .auth-buttons {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+        }
+
+        .toggle-icon {
+            font-size: 1.5rem;
+            cursor: pointer;
+            color: var(--text-color);
+            transition: color 0.3s;
+        }
+
+        .login-btn, .signup-btn {
+            padding: 10px 20px;
+            border-radius: 25px;
+            text-decoration: none;
+            font-weight: 500;
+            transition: all 0.3s;
+        }
+
+        .login-btn {
+            color: var(--primary-color);
+            border: 2px solid var(--primary-color);
+            background: transparent;
+        }
+
+        .login-btn:hover {
+            background: var(--primary-color);
+            color: white;
+        }
+
+        .signup-btn {
+            background: var(--secondary-color);
+            color: white;
+            border: 2px solid var(--secondary-color);
+        }
+
+        .signup-btn:hover {
+            background: #d62b5d;
+            border-color: #d62b5d;
+        }
+
+        .container {
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 100px 20px 20px;
+        }
+
+        .header {
+            text-align: center;
+            color: white;
+            margin-bottom: 50px;
+            animation: fadeInDown 1s ease-out;
+        }
+
+        .header h1 {
+            font-size: 3.5rem;
+            margin-bottom: 15px;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.3);
+            font-weight: 700;
+        }
+
+        .header p {
+            font-size: 1.2rem;
+            opacity: 0.9;
+        }
+
+        /* Template Selection Screen */
+        .template-selection {
+            display: block;
+        }
+
+        .template-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+            gap: 30px;
+            margin-bottom: 40px;
+        }
+
+        .template-card {
+            background: rgba(255, 255, 255, 0.95);
+            border-radius: 20px;
+            padding: 0;
+            overflow: hidden;
+            box-shadow: 0 15px 35px rgba(0,0,0,0.1);
+            transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            cursor: pointer;
+            backdrop-filter: blur(10px);
+        }
+
+        .template-card:hover {
+            transform: translateY(-10px) scale(1.02);
+            box-shadow: 0 25px 50px rgba(0,0,0,0.2);
+        }
+
+        .template-preview {
+            height: 300px;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .template-modern-preview {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 30px;
+        }
+
+        .template-creative-preview {
+            background: linear-gradient(45deg, #ff6b6b, #4ecdc4, #45b7d1);
+            color: white;
+            padding: 30px;
+            animation: gradientShift 8s ease infinite;
+            background-size: 400% 400%;
+        }
+
+        @keyframes gradientShift {
+            0% { background-position: 0% 50%; }
+            50% { background-position: 100% 50%; }
+            100% { background-position: 0% 50%; }
+        }
+
+        .template-dark-preview {
+            background: linear-gradient(135deg, #0c0c0c 0%, #1a1a1a 50%, #0f0f23 100%);
+            color: #00ff41;
+            padding: 30px;
+            font-family: 'Courier New', monospace;
+            position: relative;
+        }
+
+        .template-dark-preview::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background-image: 
+                radial-gradient(circle at 25% 25%, #00ff41 0%, transparent 50%),
+                radial-gradient(circle at 75% 75%, #0099ff 0%, transparent 50%);
+            opacity: 0.1;
+            animation: pulse 4s ease-in-out infinite;
+        }
+
+        @keyframes pulse {
+            0%, 100% { opacity: 0.1; }
+            50% { opacity: 0.3; }
+        }
+
+        .template-corporate-preview {
+            background: #ffffff;
+            color: #2c3e50;
+            padding: 30px;
+            border-top: 8px solid #2980b9;
+        }
+
+        .preview-name {
+            font-size: 2rem;
+            font-weight: bold;
+            margin-bottom: 10px;
+            position: relative;
+            z-index: 2;
+        }
+
+        .preview-title {
+            font-size: 1.1rem;
+            margin-bottom: 15px;
+            opacity: 0.8;
+            position: relative;
+            z-index: 2;
+        }
+
+        .preview-content {
+            font-size: 0.9rem;
+            line-height: 1.5;
+            position: relative;
+            z-index: 2;
+        }
+
+        .card-footer {
+            padding: 25px;
+            text-align: center;
+        }
+
+        .template-name {
+            font-size: 1.4rem;
+            font-weight: 600;
+            color: #333;
+            margin-bottom: 8px;
+        }
+
+        .template-description {
+            color: #666;
+            font-size: 0.95rem;
+            margin-bottom: 20px;
+        }
+
+        .select-btn {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            border: none;
+            padding: 12px 30px;
+            border-radius: 25px;
+            font-size: 1rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            box-shadow: 0 4px 15px rgba(102, 126, 234, 0.4);
+        }
+
+        .select-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 20px rgba(102, 126, 234, 0.6);
+        }
+
+        /* Editor Screen */
+        .editor-screen {
+            display: none;
+            grid-template-columns: 1fr 2fr;
+            gap: 30px;
+            align-items: start;
+        }
+
+        .back-btn {
+            background: rgba(255, 255, 255, 0.2);
+            color: white;
+            border: 2px solid rgba(255, 255, 255, 0.3);
+            padding: 10px 20px;
+            border-radius: 25px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            font-weight: 500;
+            margin-bottom: 20px;
+            backdrop-filter: blur(10px);
+        }
+
+        .back-btn:hover {
+            background: rgba(255, 255, 255, 0.3);
+            border-color: rgba(255, 255, 255, 0.5);
+            transform: translateX(-5px);
+        }
+
+        .editor-panel {
+            background: rgba(255, 255, 255, 0.95);
+            padding: 30px;
+            border-radius: 20px;
+            box-shadow: 0 15px 35px rgba(0,0,0,0.15);
+            backdrop-filter: blur(15px);
+            max-height: 85vh;
+            overflow-y: auto;
+        }
+
+        .current-template {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+            margin-bottom: 25px;
+            padding: 15px;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            border-radius: 15px;
+        }
+
+        .template-indicator {
+            width: 40px;
+            height: 40px;
+            border-radius: 8px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: bold;
+            font-size: 1.2rem;
+            background: rgba(255, 255, 255, 0.2);
+        }
+
+        .form-group {
+            margin-bottom: 20px;
+        }
+
+        .form-group label {
+            display: block;
+            margin-bottom: 8px;
+            font-weight: 600;
+            color: #333;
+            font-size: 0.95rem;
+        }
+
+        .form-group input, .form-group textarea {
+            width: 100%;
+            padding: 12px 16px;
+            border: 2px solid #e0e0e0;
+            border-radius: 10px;
+            font-size: 14px;
+            transition: all 0.3s ease;
+            font-family: inherit;
+        }
+
+        .form-group input:focus, .form-group textarea:focus {
+            outline: none;
+            border-color: #667eea;
+            box-shadow: 0 0 0 3px rgba(102, 126, 234, 0.1);
+            transform: translateY(-2px);
+        }
+
+        .form-group textarea {
+            resize: vertical;
+            min-height: 80px;
+        }
+
+        .dynamic-section {
+            border: 2px dashed #ddd;
+            border-radius: 15px;
+            padding: 20px;
+            margin-bottom: 20px;
+            background: #f8f9fa;
+        }
+
+        .section-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 15px;
+        }
+
+        .section-title {
+            font-size: 1.1rem;
+            font-weight: 600;
+            color: #333;
+        }
+
+        .add-btn {
+            background: #28a745;
+            color: white;
+            border: none;
+            padding: 8px 16px;
+            border-radius: 20px;
+            cursor: pointer;
+            font-size: 0.9rem;
+            font-weight: 500;
+            transition: all 0.3s ease;
+        }
+
+        .add-btn:hover {
+            background: #218838;
+            transform: scale(1.05);
+        }
+
+        .remove-btn {
+            background: #dc3545;
+            color: white;
+            border: none;
+            padding: 6px 12px;
+            border-radius: 15px;
+            cursor: pointer;
+            font-size: 0.8rem;
+            margin-top: 10px;
+            transition: all 0.3s ease;
+        }
+
+        .remove-btn:hover {
+            background: #c82333;
+            transform: scale(1.05);
+        }
+
+        .entry-item {
+            background: white;
+            padding: 15px;
+            border-radius: 10px;
+            margin-bottom: 15px;
+            border: 1px solid #eee;
+        }
+
+        .preview-panel {
+            background: white;
+            border-radius: 20px;
+            box-shadow: 0 15px 35px rgba(0,0,0,0.15);
+            overflow: hidden;
+            max-height: 85vh;
+            overflow-y: auto;
+            position: sticky;
+            top: 20px;
+        }
+
+        /* Template Styles for Preview */
+        .template-modern {
+            padding: 40px;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            min-height: 100%;
+        }
+
+        .template-creative {
+            padding: 40px;
+            background: linear-gradient(45deg, #ff6b6b, #4ecdc4, #45b7d1, #96ceb4);
+            background-size: 400% 400%;
+            animation: gradientShift 8s ease infinite;
+            color: white;
+            min-height: 100%;
+        }
+
+        .template-dark {
+            padding: 40px;
+            background: linear-gradient(135deg, #0c0c0c 0%, #1a1a1a 50%, #0f0f23 100%);
+            color: #ffffff;
+            font-family: 'Courier New', monospace;
+            min-height: 100%;
+            position: relative;
+        }
+
+        .template-corporate {
+            padding: 50px;
+            background: #ffffff;
+            color: #2c3e50;
+            min-height: 100%;
+            position: relative;
+        }
+
+        .portfolio-name {
+            font-size: 3rem;
+            font-weight: 700;
+            margin-bottom: 15px;
+        }
+
+        .portfolio-title {
+            font-size: 1.5rem;
+            margin-bottom: 25px;
+        }
+
+        .contact-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 15px;
+            margin-bottom: 35px;
+        }
+
+        .contact-item {
+            background: rgba(255, 255, 255, 0.1);
+            padding: 12px 20px;
+            border-radius: 15px;
+            backdrop-filter: blur(10px);
+        }
+
+        .section-heading {
+            font-size: 2rem;
+            margin: 35px 0 20px 0;
+            font-weight: 600;
+        }
+
+        .experience-card, .education-card {
+            background: rgba(255, 255, 255, 0.1);
+            padding: 20px;
+            border-radius: 15px;
+            margin-bottom: 20px;
+        }
+
+        .experience-title, .education-degree {
+            font-size: 1.3rem;
+            font-weight: 600;
+            margin-bottom: 8px;
+        }
+
+        .skills-container {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 10px;
+            margin-top: 15px;
+        }
+
+        .skill-tag {
+            display: inline-block;
+            background: rgba(255, 255, 255, 0.2);
+            padding: 8px 16px;
+            border-radius: 20px;
+        }
+
+        .bottom-bar {
+            display: none;
+            position: fixed;
+            bottom: 0;
+            left: 0;
+            width: 100%;
+            background: #fff;
+            border-top: 2px solid #ddd;
+            justify-content: center;
+            gap: 20px;
+            padding: 15px 0;
+            z-index: 1000;
+        }
+
+        .bottom-bar button {
+            background: linear-gradient(135deg, #28a745 0%, #20c997 100%);
+            color: white;
+            border: none;
+            padding: 12px 25px;
+            border-radius: 25px;
+            cursor: pointer;
+            font-size: 14px;
+            font-weight: 600;
+            box-shadow: 0 5px 15px rgba(40, 167, 69, 0.3);
+            transition: all 0.3s ease;
+        }
+
+        .certificate-upload {
+            border: 2px dashed #667eea;
+            border-radius: 15px;
+            padding: 30px;
+            text-align: center;
+            background: rgba(102, 126, 234, 0.05);
+            cursor: pointer;
+            transition: all 0.3s ease;
+            margin-bottom: 15px;
+        }
+
+        .certificate-upload input[type="file"] {
+            display: none;
+        }
+
+        .upload-icon {
+            font-size: 3rem;
+            color: #667eea;
+            margin-bottom: 15px;
+            display: block;
+        }
+
+        @keyframes fadeInDown {
+            from {
+                opacity: 0;
+                transform: translateY(-30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        @media (max-width: 768px) {
+            .template-grid {
+                grid-template-columns: 1fr;
+            }
+            
+            .editor-screen {
+                grid-template-columns: 1fr;
+            }
+            
+            .header h1 {
+                font-size: 2.5rem;
+            }
+
+            .navbar {
+                flex-direction: column;
+                padding: 10px 5%;
+                gap: 10px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <header class="navbar">
+        <div class="logo">
+            <i class="fa-solid fa-graduation-cap"></i>
+            <span>DigiPratibha</span>
+        </div>
+        <nav class="nav-links">
+            <a href="index.html">Home</a>
+            <a href="templates.html">Templates</a>
+            <a href="ai_generate.html">AI Generate</a>
+            <a href="build_portfolio.html">Build Portfolio</a>
+        </nav>
+        <div class="auth-buttons">
+            <i id="theme-toggle" class="fas fa-sun toggle-icon"></i>
+            <a href="login.html" class="login-btn">Login</a>
+            <a href="signup.html" class="signup-btn">Sign Up</a>
+        </div>
+    </header>
+
+    <div class="container">
+        <div class="header">
+            <h1>Portfolio Generator Pro</h1>
+            <p>Choose a stunning template and create your professional portfolio</p>
+        </div>
+
+        <!-- Template Selection Screen -->
+        <div id="template-selection" class="template-selection">
+            <div class="template-grid">
+                <!-- Modern Template Card -->
+                <div class="template-card" onclick="selectTemplate('modern')">
+                    <div class="template-preview template-modern-preview">
+                        <div class="preview-name">Alex Johnson</div>
+                        <div class="preview-title">Full Stack Developer</div>
+                        <div class="preview-content">
+                            <div style="margin-bottom: 15px;">
+                                <span style="background: rgba(255,255,255,0.2); padding: 5px 12px; border-radius: 15px; margin-right: 10px;">alex@email.com</span>
+                                <span style="background: rgba(255,255,255,0.2); padding: 5px 12px; border-radius: 15px;">+1 234 567</span>
+                            </div>
+                            <div style="font-size: 0.9rem; opacity: 0.9;">
+                                Passionate developer with expertise in React, Node.js, and modern web technologies...
+                            </div>
+                        </div>
+                    </div>
+                    <div class="card-footer">
+                        <div class="template-name">Modern Gradient</div>
+                        <div class="template-description">Eye-catching gradient design with glassmorphism effects</div>
+                        <button class="select-btn">Select Template</button>
+                    </div>
+                </div>
+
+                <!-- Creative Template Card -->
+                <div class="template-card" onclick="selectTemplate('creative')">
+                    <div class="template-preview template-creative-preview">
+                        <div class="preview-name">Sarah Creative</div>
+                        <div class="preview-title" style="background: rgba(255,255,255,0.2); padding: 8px 20px; border-radius: 25px; display: inline-block;">UI/UX Designer</div>
+                        <div class="preview-content" style="margin-top: 15px;">
+                            <div style="font-size: 0.9rem;">
+                                Creative professional specializing in user-centered design and interactive experiences...
+                            </div>
+                        </div>
+                    </div>
+                    <div class="card-footer">
+                        <div class="template-name">Creative Dynamic</div>
+                        <div class="template-description">Animated design with vibrant colors and creative flair</div>
+                        <button class="select-btn">Select Template</button>
+                    </div>
+                </div>
+
+                <!-- Dark Template Card -->
+                <div class="template-card" onclick="selectTemplate('dark')">
+                    <div class="template-preview template-dark-preview">
+                        <div class="preview-name" style="text-shadow: 0 0 10px #00ff41;">// John_Hacker</div>
+                        <div class="preview-title" style="color: #0099ff; text-shadow: 0 0 5px #0099ff;">Cybersecurity Expert</div>
+                        <div class="preview-content" style="margin-top: 15px;">
+                            <div style="color: #ffffff; font-size: 0.85rem; font-family: 'Courier New', monospace;">
+                                > Penetration testing specialist<br>
+                                > Ethical hacking & security audits<br>
+                                > 5+ years in cybersecurity...
+                            </div>
+                        </div>
+                    </div>
+                    <div class="card-footer">
+                        <div class="template-name">Dark Professional</div>
+                        <div class="template-description">Sleek dark theme with terminal-style aesthetics</div>
+                        <button class="select-btn">Select Template</button>
+                    </div>
+                </div>
+
+                <!-- Corporate Template Card -->
+                <div class="template-card" onclick="selectTemplate('corporate')">
+                    <div class="template-preview template-corporate-preview">
+                        <div class="preview-name" style="color: #2980b9;">Michael Business</div>
+                        <div class="preview-title" style="color: #34495e;">Senior Project Manager</div>
+                        <div class="preview-content" style="margin-top: 15px;">
+                            <div style="background: #f8f9fa; padding: 12px; border-left: 4px solid #2980b9; font-size: 0.85rem;">
+                                📧 michael@company.com<br>
+                                📞 +1 555 0123<br>
+                                📍 New York, NY
+                            </div>
+                        </div>
+                    </div>
+                    <div class="card-footer">
+                        <div class="template-name">Corporate Clean</div>
+                        <div class="template-description">Professional business-style layout with clean typography</div>
+                        <button class="select-btn">Select Template</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Editor Screen -->
+        <div id="editor-screen" class="editor-screen">
+            <div class="editor-panel">
+                <button class="back-btn" onclick="goBackToSelection()">← Back to Templates</button>
+                
+                <div class="current-template">
+                    <div class="template-indicator" id="template-indicator">M</div>
+                    <div style="flex: 1;">
+                        <div style="font-weight: 600; font-size: 1.1rem;" id="template-name-display">Modern Gradient</div>
+                        <div style="opacity: 0.8; font-size: 0.9rem;">Customize your information below</div>
+                    </div>
+                    <button onclick="clearAllData()" style="background: rgba(255,255,255,0.2); color: white; border: 1px solid rgba(255,255,255,0.3); padding: 8px 15px; border-radius: 15px; cursor: pointer; font-size: 0.8rem;">Clear All</button>
+                </div>
+
+                <div class="form-group">
+                    <label for="name">Full Name</label>
+                    <input type="text" id="name" value="John Doe" placeholder="Enter your full name">
+                </div>
+
+                <div class="form-group">
+                    <label for="title">Professional Title</label>
+                    <input type="text" id="title" value="Software Developer" placeholder="e.g., Software Developer">
+                </div>
+
+                <div class="form-group">
+                    <label for="email">Email</label>
+                    <input type="email" id="email" value="john.doe@email.com" placeholder="your.email@example.com">
+                </div>
+
+                <div class="form-group">
+                    <label for="phone">Phone</label>
+                    <input type="text" id="phone" value="+1 (555) 123-4567" placeholder="Phone number">
+                </div>
+
+                <div class="form-group">
+                    <label for="location">Location</label>
+                    <input type="text" id="location" value="New York, NY" placeholder="City, Country">
+                </div>
+
+                <div class="form-group">
+                    <label for="website">Website/Portfolio</label>
+                    <input type="text" id="website" value="www.johndoe.com" placeholder="www.yoursite.com">
+                </div>
+
+                <div class="form-group">
+                    <label for="about">About Me</label>
+                    <textarea id="about" placeholder="Brief description about yourself">Passionate software developer with 5+ years of experience in full-stack development. Specialized in React, Node.js, and cloud technologies.</textarea>
+                </div>
+
+                <div class="dynamic-section">
+                    <div class="section-header">
+                        <div class="section-title">Experience</div>
+                        <button class="add-btn" onclick="addExperience()">+ Add Experience</button>
+                    </div>
+                    <div id="experience-container">
+                        <div class="entry-item experience-entry">
+                            <input type="text" placeholder="Job Title" value="Senior Software Developer" style="margin-bottom: 10px;">
+                            <input type="text" placeholder="Company" value="Tech Solutions Inc." style="margin-bottom: 10px;">
+                            <input type="text" placeholder="Duration" value="2021 - Present" style="margin-bottom: 10px;">
+                            <textarea placeholder="Job description" style="margin-bottom: 10px;">Led development of web applications using React and Node.js. Improved system performance by 40%.</textarea>
+                            <button type="button" class="remove-btn" onclick="removeExperience(this)">Remove</button>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="dynamic-section">
+                    <div class="section-header">
+                        <div class="section-title">Education</div>
+                        <button class="add-btn" onclick="addEducation()">+ Add Education</button>
+                    </div>
+                    <div id="education-container">
+                        <div class="entry-item education-entry">
+                            <input type="text" placeholder="Degree" value="Bachelor of Science in Computer Science" style="margin-bottom: 10px;">
+                            <input type="text" placeholder="Institution" value="University of Technology" style="margin-bottom: 10px;">
+                            <input type="text" placeholder="Year" value="2019" style="margin-bottom: 10px;">
+                            <button type="button" class="remove-btn" onclick="removeEducation(this)">Remove</button>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="dynamic-section">
+                    <div class="section-header">
+                        <div class="section-title">Skills</div>
+                        <button class="add-btn" onclick="addSkill()">+ Add Skill</button>
+                    </div>
+                    <div id="skills-container">
+                        <input type="text" placeholder="Skill" value="JavaScript" style="margin-bottom: 10px;">
+                        <input type="text" placeholder="Skill" value="React" style="margin-bottom: 10px;">
+                        <input type="text" placeholder="Skill" value="Node.js" style="margin-bottom: 10px;">
+                    </div>
+                </div>
+
+                <div class="dynamic-section">
+                    <div class="section-header">
+                        <div class="section-title">Certificates & Achievements</div>
+                    </div>
+                    
+                    <div class="certificate-upload" onclick="document.getElementById('certificate-input').click()" 
+                         ondrop="handleDrop(event)" ondragover="handleDragOver(event)" ondragleave="handleDragLeave(event)">
+                        <input type="file" id="certificate-input" accept="image/*" multiple onchange="handleFileUpload(event)">
+                        <div class="upload-icon">☁️</div>
+                        <div class="upload-text">Click to upload certificates or drag & drop images here</div>
+                        <div class="upload-subtext">Supports JPG, PNG, GIF files</div>
+                    </div>
+                    
+                    <div class="certificate-preview" id="certificate-preview">
+                        <!-- Uploaded certificate previews will appear here -->
+                    </div>
+                </div>
+            </div>
+
+            <div class="preview-panel">
+                <div id="portfolio-preview" class="template-modern">
+                    <!-- Portfolio content will be generated here -->
+                </div>
+            </div>
+        </div>
+
+        <div class="bottom-bar">
+            <button id="downloadBtn" onclick="downloadPortfolio()">💾 Download Portfolio</button>
+            <button id="shareBtn" onclick="sharePortfolio()">🚀 Share Portfolio</button>
+        </div>
+    </div>
+
+    <!-- Share Modal -->
+    <div id="shareModal" style="display:none; position:fixed; top:0; left:0; width:100%; height:100%; background:rgba(0,0,0,0.6); align-items:center; justify-content:center; z-index:2000;">
+        <div style="background:white; padding:30px; border-radius:15px; max-width:500px; width:90%;">
+            <h2>🚀 Share Your Portfolio</h2>
+            <p>Copy your hosted portfolio link or share directly:</p>
+            <input type="text" id="portfolioUrl" readonly style="width:100%; padding:10px; margin:15px 0; border:1px solid #ccc; border-radius:8px;">
+            <button onclick="copyUrl()" style="padding:10px 20px; background:#28a745; color:white; border:none; border-radius:8px; cursor:pointer;">📋 Copy Link</button>
+            <div style="margin-top:20px; display:flex; gap:10px; flex-wrap:wrap;">
+                <a id="linkedinShare" target="_blank" class="share-btn">💼 LinkedIn</a>
+                <a id="twitterShare" target="_blank" class="share-btn">🐦 Twitter</a>
+                <a id="facebookShare" target="_blank" class="share-btn">📘 Facebook</a>
+                <a id="whatsappShare" target="_blank" class="share-btn">💬 WhatsApp</a>
+                <a id="emailShare" target="_blank" class="share-btn">📧 Email</a>
+            </div>
+            <button onclick="document.getElementById('shareModal').style.display='none'" style="margin-top:15px; padding:8px 15px; background:#6c757d; color:white; border:none; border-radius:8px; cursor:pointer;">Close</button>
+        </div>
+    </div>
+
+    <!-- Load html2pdf library -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.9.3/html2pdf.bundle.min.js"></script>
+
+    <script>
+        let currentTemplate = 'modern';
+        let isEditorMode = false;
+        let certificates = [];
+
+        const templateConfig = {
+            modern: {
+                name: 'Modern Gradient',
+                indicator: 'M',
+                class: 'template-modern'
+            },
+            creative: {
+                name: 'Creative Dynamic', 
+                indicator: 'C',
+                class: 'template-creative'
+            },
+            dark: {
+                name: 'Dark Professional',
+                indicator: 'D', 
+                class: 'template-dark'
+            },
+            corporate: {
+                name: 'Corporate Clean',
+                indicator: 'B',
+                class: 'template-corporate'
+            }
+        };
+
+        // Theme toggle functionality
+        document.addEventListener('DOMContentLoaded', () => {
+            const themeToggle = document.getElementById('theme-toggle');
+            const body = document.body;
+
+            const savedTheme = localStorage.getItem('theme');
+            const prefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
+
+            if (savedTheme === 'dark' || (!savedTheme && prefersDark)) {
+                body.classList.add('dark-mode');
+                themeToggle.classList.remove('fa-sun');
+                themeToggle.classList.add('fa-moon');
+            }
+
+            themeToggle.addEventListener('click', () => {
+                body.classList.toggle('dark-mode');
+                if (body.classList.contains('dark-mode')) {
+                    themeToggle.classList.remove('fa-sun');
+                    themeToggle.classList.add('fa-moon');
+                    localStorage.setItem('theme', 'dark');
+                } else {
+                    themeToggle.classList.remove('fa-moon');
+                    themeToggle.classList.add('fa-sun');
+                    localStorage.setItem('theme', 'light');
+                }
+            });
+
+            // Initialize preview
+            updatePreview();
+        });
+
+        function selectTemplate(template) {
+            console.log('Template selected:', template);
+            currentTemplate = template;
+            
+            document.querySelector('.bottom-bar').style.display = 'flex';
+
+            const indicator = document.getElementById('template-indicator');
+            const nameDisplay = document.getElementById('template-name-display');
+            
+            indicator.textContent = templateConfig[template].indicator;
+            nameDisplay.textContent = templateConfig[template].name;
+            
+            document.getElementById('template-selection').style.display = 'none';
+            document.getElementById('editor-screen').style.display = 'grid';
+            
+            isEditorMode = true;
+            updatePreview();
+            
+            document.querySelectorAll('input, textarea').forEach(input => {
+                input.removeEventListener('input', updatePreview);
+                input.addEventListener('input', updatePreview);
+            });
+        }
+
+        function goBackToSelection() {
+            document.querySelector('.bottom-bar').style.display = 'none';
+            document.getElementById('template-selection').style.display = 'block';
+            document.getElementById('editor-screen').style.display = 'none';
+            isEditorMode = false;
+        }
+
+        function updatePreview() {
+            const name = document.getElementById('name').value;
+            const title = document.getElementById('title').value;
+            const email = document.getElementById('email').value;
+            const phone = document.getElementById('phone').value;
+            const location = document.getElementById('location').value;
+            const website = document.getElementById('website').value;
+            const about = document.getElementById('about').value;
+
+            let experienceHTML = '';
+            document.querySelectorAll('#experience-container .experience-entry').forEach(entry => {
+                const inputs = entry.querySelectorAll('input, textarea');
+                if (inputs.length >= 4) {
+                    const job = inputs[0].value;
+                    const company = inputs[1].value;
+                    const duration = inputs[2].value;
+                    const desc = inputs[3].value;
+
+                    experienceHTML += `
+                        <div class="experience-card">
+                            <div class="experience-title">${job}</div>
+                            <div class="experience-company">${company}</div>
+                            <div class="experience-duration">${duration}</div>
+                            <div class="experience-description">${desc}</div>
+                        </div>
+                    `;
+                }
+            });
+
+            let educationHTML = '';
+            document.querySelectorAll('#education-container .education-entry').forEach(entry => {
+                const inputs = entry.querySelectorAll('input');
+                if (inputs.length >= 3) {
+                    const degree = inputs[0].value;
+                    const institution = inputs[1].value;
+                    const year = inputs[2].value;
+
+                    educationHTML += `
+                        <div class="education-card">
+                            <div class="education-degree">${degree}</div>
+                            <div class="education-institution">${institution}</div>
+                            <div class="education-year">${year}</div>
+                        </div>
+                    `;
+                }
+            });
+
+            let skillsHTML = '';
+            document.querySelectorAll('#skills-container input').forEach(input => {
+                if (input.value.trim() !== '') {
+                    skillsHTML += `<span class="skill-tag">${input.value}</span>`;
+                }
+            });
+
+            let certificatesHTML = '';
+            if (certificates.length > 0) {
+                certificates.forEach(cert => {
+                    certificatesHTML += `
+                        <div class="certificate-display">
+                            <img src="${cert.dataUrl}" alt="${cert.name}" style="max-width: 100%; height: auto; border-radius: 10px;">
+                            <div class="certificate-name">${cert.name}</div>
+                        </div>
+                    `;
+                });
+            }
+
+            const preview = document.getElementById('portfolio-preview');
+            preview.className = templateConfig[currentTemplate].class;
+            preview.innerHTML = `
+                <div class="portfolio-name">${name}</div>
+                <div class="portfolio-title">${title}</div>
+
+                <div class="contact-grid">
+                    <div class="contact-item">📧 ${email}</div>
+                    <div class="contact-item">📱 ${phone}</div>
+                    <div class="contact-item">📍 ${location}</div>
+                    <div class="contact-item">🔗 ${website}</div>
+                </div>
+
+                <div class="section-heading">About Me</div>
+                <p>${about}</p>
+
+                <div class="section-heading">Experience</div>
+                ${experienceHTML}
+
+                <div class="section-heading">Education</div>
+                ${educationHTML}
+
+                <div class="section-heading">Skills</div>
+                <div class="skills-container">
+                    ${skillsHTML}
+                </div>
+
+                ${certificates.length > 0 ? `
+                    <div class="section-heading">Certificates & Achievements</div>
+                    <div class="certificates-grid">
+                        ${certificatesHTML}
+                    </div>
+                ` : ''}
+            `;
+        }
+
+        function addExperience() {
+            const container = document.getElementById('experience-container');
+            const div = document.createElement('div');
+            div.className = 'entry-item experience-entry';
+            div.innerHTML = `
+                <input type="text" placeholder="Job Title" style="margin-bottom: 10px;">
+                <input type="text" placeholder="Company" style="margin-bottom: 10px;">
+                <input type="text" placeholder="Duration" style="margin-bottom: 10px;">
+                <textarea placeholder="Job description" style="margin-bottom: 10px;"></textarea>
+                <button type="button" class="remove-btn" onclick="removeExperience(this)">Remove</button>
+            `;
+            container.appendChild(div);
+            
+            div.querySelectorAll('input, textarea').forEach(input => {
+                input.addEventListener('input', updatePreview);
+            });
+            
+            updatePreview();
+        }
+
+        function removeExperience(btn) {
+            btn.parentElement.remove();
+            updatePreview();
+        }
+
+        function addEducation() {
+            const container = document.getElementById('education-container');
+            const div = document.createElement('div');
+            div.className = 'entry-item education-entry';
+            div.innerHTML = `
+                <input type="text" placeholder="Degree" style="margin-bottom: 10px;">
+                <input type="text" placeholder="Institution" style="margin-bottom: 10px;">
+                <input type="text" placeholder="Year" style="margin-bottom: 10px;">
+                <button type="button" class="remove-btn" onclick="removeEducation(this)">Remove</button>
+            `;
+            container.appendChild(div);
+            
+            div.querySelectorAll('input').forEach(input => {
+                input.addEventListener('input', updatePreview);
+            });
+            
+            updatePreview();
+        }
+
+        function removeEducation(btn) {
+            btn.parentElement.remove();
+            updatePreview();
+        }
+
+        function addSkill() {
+            const container = document.getElementById('skills-container');
+            const input = document.createElement('input');
+            input.type = 'text';
+            input.placeholder = 'Skill';
+            input.style.marginBottom = '10px';
+            input.addEventListener('input', updatePreview);
+            container.appendChild(input);
+            updatePreview();
+        }
+
+        function clearAllData() {
+            if (confirm('Are you sure you want to clear all data?')) {
+                document.getElementById('name').value = '';
+                document.getElementById('title').value = '';
+                document.getElementById('email').value = '';
+                document.getElementById('phone').value = '';
+                document.getElementById('location').value = '';
+                document.getElementById('website').value = '';
+                document.getElementById('about').value = '';
+                
+                document.getElementById('experience-container').innerHTML = '';
+                document.getElementById('education-container').innerHTML = '';
+                document.getElementById('skills-container').innerHTML = '';
+                
+                certificates = [];
+                document.getElementById('certificate-preview').innerHTML = '';
+                
+                updatePreview();
+            }
+        }
+
+        function handleFileUpload(event) {
+            const files = event.target.files;
+            processFiles(files);
+        }
+
+        function handleDrop(event) {
+            event.preventDefault();
+            const files = event.dataTransfer.files;
+            processFiles(files);
+            event.target.classList.remove('dragover');
+        }
+
+        function handleDragOver(event) {
+            event.preventDefault();
+            event.target.classList.add('dragover');
+        }
+
+        function handleDragLeave(event) {
+            event.target.classList.remove('dragover');
+        }
+
+        function processFiles(files) {
+            for (let i = 0; i < files.length; i++) {
+                const file = files[i];
+                
+                if (!file.type.startsWith('image/')) {
+                    alert(`${file.name} is not an image file. Please upload only image files.`);
+                    continue;
+                }
+
+                const reader = new FileReader();
+                reader.onload = function(e) {
+                    const certificate = {
+                        name: file.name.split('.')[0],
+                        dataUrl: e.target.result
+                    };
+                    
+                    certificates.push(certificate);
+                    displayCertificatePreview(certificate, certificates.length - 1);
+                    updatePreview();
+                };
+                reader.readAsDataURL(file);
+            }
+        }
+
+        function displayCertificatePreview(certificate, index) {
+            const previewContainer = document.getElementById('certificate-preview');
+            
+            const certificateItem = document.createElement('div');
+            certificateItem.className = 'certificate-item';
+            certificateItem.style.cssText = 'position: relative; display: inline-block; margin: 10px; border: 1px solid #ddd; border-radius: 8px; overflow: hidden;';
+            certificateItem.innerHTML = `
+                <img src="${certificate.dataUrl}" alt="${certificate.name}" style="width: 150px; height: 100px; object-fit: cover;">
+                <button onclick="removeCertificate(${index})" style="position: absolute; top: 5px; right: 5px; background: #dc3545; color: white; border: none; border-radius: 50%; width: 20px; height: 20px; cursor: pointer; font-size: 12px;">×</button>
+                <div style="padding: 8px; background: white; font-size: 12px; text-align: center;">${certificate.name}</div>
+            `;
+            
+            previewContainer.appendChild(certificateItem);
+        }
+
+        function removeCertificate(index) {
+            certificates.splice(index, 1);
+            
+            const previewContainer = document.getElementById('certificate-preview');
+            previewContainer.innerHTML = '';
+            
+            certificates.forEach((cert, i) => {
+                displayCertificatePreview(cert, i);
+            });
+            
+            updatePreview();
+        }
+
+        function downloadPortfolio() {
+            const element = document.getElementById("portfolio-preview");
+            html2pdf().set({
+                margin: 0.5,
+                filename: 'MyPortfolio.pdf',
+                image: { type: 'jpeg', quality: 0.98 },
+                html2canvas: { scale: 2 },
+                jsPDF: { unit: 'in', format: 'a4', orientation: 'portrait' }
+            }).from(element).save();
+        }
+
+        function sharePortfolio() {
+            const modal = document.getElementById("shareModal");
+            const urlField = document.getElementById("portfolioUrl");
+            const url = "https://yourportfolio.netlify.app";
+
+            urlField.value = url;
+            modal.style.display = "flex";
+        }
+
+        function copyUrl() {
+            const input = document.getElementById("portfolioUrl");
+            input.select();
+            input.setSelectionRange(0, 99999);
+            navigator.clipboard.writeText(input.value);
+            alert("📋 Link copied to clipboard!");
+        }
+
+        window.onclick = function(e) {
+            const modal = document.getElementById("shareModal");
+            if (e.target === modal) {
+                modal.style.display = "none";
+            }
+        };
+    </script>
+</body>
+</html>

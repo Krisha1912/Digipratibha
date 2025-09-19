@@ -1,0 +1,139 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Enhanced Portfolio Builder</title>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/Sortable/1.15.0/Sortable.min.js"></script>
+    <link rel="stylesheet" href="drag_drop.css">
+</head>
+<body>
+   <main class="main-content">
+        <header class="navbar">
+            <div class="logo">
+                <i class="fa-solid fa-graduation-cap"></i>
+                <span>DigiPratibha</span>
+            </div>
+            <nav class="nav-links">
+                <a href="home.html">Home</a>
+                <a href="templates.html">Templates</a>
+                <a href="ai_generate.html">AI Generate</a>
+                <a href="build_portfolio.html">Build Portfolio</a>
+                <a href="blogs.html">blogs</a>
+            </nav>
+            <div class="auth-buttons">
+                <i id="theme-toggle" class="fas fa-sun toggle-icon"></i>
+                <a href="login.html" class="login-btn">Login</a>
+                <a href="signup.html" class="signup-btn">Sign Up</a>
+            </div>
+        </header>
+        
+        <div class="sidebar">
+            <h2>🎨 Components</h2>
+            
+            <div class="component-item" draggable="true" data-type="header">
+                <strong>👤 Header Section</strong>
+                <div style="font-size: 12px; opacity: 0.8; margin-top: 5px;">Name, title, profile image</div>
+            </div>
+            
+            <div class="component-item" draggable="true" data-type="about">
+                <strong>📖 About Me</strong>
+                <div style="font-size: 12px; opacity: 0.8; margin-top: 5px;">Personal description</div>
+            </div>
+            
+            <div class="component-item" draggable="true" data-type="skills">
+                <strong>🎯 Skills</strong>
+                <div style="font-size: 12px; opacity: 0.8; margin-top: 5px;">Technical & soft skills</div>
+            </div>
+            
+            <div class="component-item" draggable="true" data-type="projects">
+                <strong>💼 Projects</strong>
+                <div style="font-size: 12px; opacity: 0.8; margin-top: 5px;">Portfolio projects</div>
+            </div>
+            
+            <div class="component-item" draggable="true" data-type="experience">
+                <strong>🏢 Experience</strong>
+                <div style="font-size: 12px; opacity: 0.8; margin-top: 5px;">Work experience</div>
+            </div>
+            
+            <div class="component-item" draggable="true" data-type="education">
+                <strong>🎓 Education</strong>
+                <div style="font-size: 12px; opacity: 0.8; margin-top: 5px;">Academic background</div>
+            </div>
+
+            <div class="component-item" draggable="true" data-type="certificates">
+                <strong>🏆 Certificates</strong>
+                <div style="font-size: 12px; opacity: 0.8; margin-top: 5px;">Upload certificate images</div>
+            </div>
+            
+            <div class="component-item" draggable="true" data-type="contact">
+                <strong>📞 Contact</strong>
+                <div style="font-size: 12px; opacity: 0.8; margin-top: 5px;">Contact information</div>
+            </div>
+
+            <div class="action-buttons">
+                <button class="action-btn download-btn" id="downloadPDF">
+                    📄 Download PDF
+                </button>
+                <button class="action-btn save-btn" id="savePortfolio">
+                    💾 Save Portfolio
+                </button>
+                <button class="action-btn share-btn" id="sharePortfolio">
+                    🚀 Share Online
+                </button>
+            </div>
+
+            <div id="shareModal" class="modal">
+                <div class="modal-content">
+                    <span class="close">&times;</span>
+                    <h2>🚀 Share Your Portfolio</h2>
+                    <p>Your portfolio has been hosted online!</p>
+                    <div style="margin: 20px 0;">
+                        <input type="text" id="portfolioUrl" readonly 
+                               style="width: 100%; padding: 10px; border: 1px solid #ddd; border-radius: 4px; background: #f8f9fa;">
+                    </div>
+                    <button onclick="copyUrl()" 
+                            style="background: #27ae60; color: white; border: none; padding: 10px 20px; border-radius: 4px; cursor: pointer; margin: 5px;">
+                        📋 Copy Link
+                    </button>
+                    <div class="share-options">
+                        <a href="#" id="linkedinShare" class="share-option" target="_blank">
+                            <div style="font-size: 24px; margin-bottom: 5px;">💼</div>
+                            <div>LinkedIn</div>
+                        </a>
+                        <a href="#" id="twitterShare" class="share-option" target="_blank">
+                            <div style="font-size: 24px; margin-bottom: 5px;">🦅</div>
+                            <div>Twitter</div>
+                        </a>
+                        <a href="#" id="facebookShare" class="share-option" target="_blank">
+                            <div style="font-size: 24px; margin-bottom: 5px;">📘</div>
+                            <div>Facebook</div>
+                        </a>
+                        <a href="#" id="emailShare" class="share-option">
+                            <div style="font-size: 24px; margin-bottom: 5px;">📧</div>
+                            <div>Email</div>
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="canvas-container">
+            <div id="dropZone" class="drop-zone">
+                <div class="empty-state">
+                    <h2>🚀 Build Your Portfolio</h2>
+                    <p>Drag components from the left sidebar to start building your portfolio</p>
+                    <p style="margin-top: 10px; font-size: 14px; opacity: 0.7;">You can also reorder sections by dragging them up or down</p>
+                </div>
+            </div>
+        </div>
+
+        <input type="file" id="imageUpload" class="hidden" accept="image/*">
+        <input type="file" id="certificateUpload" class="hidden" accept="image/*" multiple>
+        <input type="file" id="projectFileUpload" class="hidden" accept=".pdf,.doc,.docx,.txt,.zip,.rar,.js,.html,.css,.py,.java,.cpp,.c,.md,.json,.xml,.ppt,.pptx,.xls,.xlsx" multiple>
+    </main>
+    <script src="drag_drop.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.9.3/html2pdf.bundle.min.js"></script>
+
+</body>
+</html>

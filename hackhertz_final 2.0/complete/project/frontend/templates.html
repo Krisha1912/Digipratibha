@@ -1,0 +1,310 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Portfolio Generator Pro</title>
+<link rel="stylesheet" href="templates.css">
+</head>
+<body>
+    <header class="navbar">
+        <div class="logo">
+            <i class="fa-solid fa-graduation-cap"></i>
+            <span>DigiPratibha</span>
+        </div>
+        <nav class="nav-links">
+            <a href="home.html">Home</a>
+            <a href="templates.html">Templates</a>
+            <a href="ai_generate.html">ai_generate</a>
+            <a href="build_portfolio.html">build portfolio</a>
+            <a href="blogs.html">blogs</a>
+            <!-- <a href="#">My Portfo</a> -->
+        </nav>
+        <div class="auth-buttons">
+            <i id="theme-toggle" class="fas fa-sun toggle-icon"></i>
+            <a href="login.html" class="login-btn">Login</a>
+            <a href="signup.html" class="signup-btn">Sign Up</a>
+        </div>
+    </header>
+
+
+    <div class="container">
+        <div class="header">
+            <h1>Portfolio Generator Pro</h1>
+            <p>Choose a stunning template and create your professional portfolio</p>
+        </div>
+
+        <!-- Template Selection Screen -->
+        <div id="template-selection" class="template-selection">
+            <div class="template-grid">
+                <!-- Modern Template Card -->
+                <div class="template-card" onclick="selectTemplate('modern')">
+                    <div class="template-preview template-modern-preview">
+                        <div class="preview-name">Alex Johnson</div>
+                        <div class="preview-title">Full Stack Developer</div>
+                        <div class="preview-content">
+                            <div style="margin-bottom: 15px;">
+                                <span style="background: rgba(255,255,255,0.2); padding: 5px 12px; border-radius: 15px; margin-right: 10px;">alex@email.com</span>
+                                <span style="background: rgba(255,255,255,0.2); padding: 5px 12px; border-radius: 15px;">+1 234 567</span>
+                            </div>
+                            <div style="font-size: 0.9rem; opacity: 0.9;">
+                                Passionate developer with expertise in React, Node.js, and modern web technologies...
+                            </div>
+                        </div>
+                    </div>
+                    <div class="card-footer">
+                        <div class="template-name">Modern Gradient</div>
+                        <div class="template-description">Eye-catching gradient design with glassmorphism effects</div>
+                        <button class="select-btn">Select Template</button>
+                    </div>
+                </div>
+
+                <!-- Creative Template Card -->
+                <div class="template-card" onclick="selectTemplate('creative')">
+                    <div class="template-preview template-creative-preview">
+                        <div class="preview-name">Sarah Creative</div>
+                        <div class="preview-title" style="background: rgba(255,255,255,0.2); padding: 8px 20px; border-radius: 25px; display: inline-block;">UI/UX Designer</div>
+                        <div class="preview-content" style="margin-top: 15px;">
+                            <div style="font-size: 0.9rem;">
+                                Creative professional specializing in user-centered design and interactive experiences...
+                            </div>
+                        </div>
+                    </div>
+                    <div class="card-footer">
+                        <div class="template-name">Creative Dynamic</div>
+                        <div class="template-description">Animated design with vibrant colors and creative flair</div>
+                        <button class="select-btn">Select Template</button>
+                    </div>
+                </div>
+
+                <!-- Dark Template Card -->
+                <div class="template-card" onclick="selectTemplate('dark')">
+                    <div class="template-preview template-dark-preview">
+                        <div class="preview-name" style="text-shadow: 0 0 10px #00ff41;">// John_Hacker</div>
+                        <div class="preview-title" style="color: #0099ff; text-shadow: 0 0 5px #0099ff;">Cybersecurity Expert</div>
+                        <div class="preview-content" style="margin-top: 15px;">
+                            <div style="color: #ffffff; font-size: 0.85rem; font-family: 'Courier New', monospace;">
+                                > Penetration testing specialist<br>
+                                > Ethical hacking & security audits<br>
+                                > 5+ years in cybersecurity...
+                            </div>
+                        </div>
+                    </div>
+                    <div class="card-footer">
+                        <div class="template-name">Dark Professional</div>
+                        <div class="template-description">Sleek dark theme with terminal-style aesthetics</div>
+                        <button class="select-btn">Select Template</button>
+                    </div>
+                </div>
+
+                <!-- Corporate Template Card -->
+                <div class="template-card" onclick="selectTemplate('corporate')">
+                    <div class="template-preview template-corporate-preview">
+                        <div class="preview-name" style="color: #2980b9;">Michael Business</div>
+                        <div class="preview-title" style="color: #34495e;">Senior Project Manager</div>
+                        <div class="preview-content" style="margin-top: 15px;">
+                            <div style="background: #f8f9fa; padding: 12px; border-left: 4px solid #2980b9; font-size: 0.85rem;">
+                                📧 michael@company.com<br>
+                                📞 +1 555 0123<br>
+                                📍 New York, NY
+                            </div>
+                        </div>
+                    </div>
+                    <div class="card-footer">
+                        <div class="template-name">Corporate Clean</div>
+                        <div class="template-description">Professional business-style layout with clean typography</div>
+                        <button class="select-btn">Select Template</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Editor Screen -->
+        <div id="editor-screen" class="editor-screen">
+            <div class="editor-panel">
+                <button class="back-btn" onclick="goBackToSelection()">← Back to Templates</button>
+                
+                <div class="current-template">
+                    <div class="template-indicator" id="template-indicator">M</div>
+                    <div style="flex: 1;">
+                        <div style="font-weight: 600; font-size: 1.1rem;" id="template-name-display">Modern Gradient</div>
+                        <div style="opacity: 0.8; font-size: 0.9rem;">Customize your information below</div>
+                    </div>
+                    <button onclick="clearAllData()" style="background: rgba(255,255,255,0.2); color: white; border: 1px solid rgba(255,255,255,0.3); padding: 8px 15px; border-radius: 15px; cursor: pointer; font-size: 0.8rem;">Clear All</button>
+                </div>
+
+                <div class="form-group">
+                    <label for="name">Full Name</label>
+                    <input type="text" id="name" value="John Doe" placeholder="Enter your full name">
+                </div>
+
+                <div class="form-group">
+                    <label for="title">Professional Title</label>
+                    <input type="text" id="title" value="Software Developer" placeholder="e.g., Software Developer">
+                </div>
+
+                <div class="form-group">
+                    <label for="email">Email</label>
+                    <input type="email" id="email" value="john.doe@email.com" placeholder="your.email@example.com">
+                </div>
+
+                <div class="form-group">
+                    <label for="phone">Phone</label>
+                    <input type="text" id="phone" value="+1 (555) 123-4567" placeholder="Phone number">
+                </div>
+
+                <div class="form-group">
+                    <label for="location">Location</label>
+                    <input type="text" id="location" value="New York, NY" placeholder="City, Country">
+                </div>
+
+                <div class="form-group">
+                    <label for="website">Website/Portfolio</label>
+                    <input type="text" id="website" value="www.johndoe.com" placeholder="www.yoursite.com">
+                </div>
+
+                <div class="form-group">
+                    <label for="about">About Me</label>
+                    <textarea id="about" placeholder="Brief description about yourself">Passionate software developer with 5+ years of experience in full-stack development. Specialized in React, Node.js, and cloud technologies.</textarea>
+                </div>
+
+                <div class="dynamic-section">
+                    <div class="section-header">
+                        <div class="section-title">Experience</div>
+                        <button class="add-btn" onclick="addExperience()">+ Add Experience</button>
+                    </div>
+                    <div id="experience-container">
+                        <div class="entry-item experience-entry">
+                            <input type="text" placeholder="Job Title" value="Senior Software Developer" style="margin-bottom: 10px;">
+                            <input type="text" placeholder="Company" value="Tech Solutions Inc." style="margin-bottom: 10px;">
+                            <input type="text" placeholder="Duration" value="2021 - Present" style="margin-bottom: 10px;">
+                            <textarea placeholder="Job description" style="margin-bottom: 10px;">Led development of web applications using React and Node.js. Improved system performance by 40%.</textarea>
+                            <button type="button" class="remove-btn" onclick="removeExperience(this)">Remove</button>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="dynamic-section">
+                    <div class="section-header">
+                        <div class="section-title">Education</div>
+                        <button class="add-btn" onclick="addEducation()">+ Add Education</button>
+                    </div>
+                    <div id="education-container">
+                        <div class="entry-item education-entry">
+                            <input type="text" placeholder="Degree" value="Bachelor of Science in Computer Science" style="margin-bottom: 10px;">
+                            <input type="text" placeholder="Institution" value="University of Technology" style="margin-bottom: 10px;">
+                            <input type="text" placeholder="Year" value="2019" style="margin-bottom: 10px;">
+                            <button type="button" class="remove-btn" onclick="removeEducation(this)">Remove</button>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="dynamic-section">
+                    <div class="section-header">
+                        <div class="section-title">Skills</div>
+                        <button class="add-btn" onclick="addSkill()">+ Add Skill</button>
+                    </div>
+                    <div id="skills-container">
+                        <input type="text" placeholder="Skill" value="JavaScript" style="margin-bottom: 10px;">
+                        <input type="text" placeholder="Skill" value="React" style="margin-bottom: 10px;">
+                        <input type="text" placeholder="Skill" value="Node.js" style="margin-bottom: 10px;">
+                    </div>
+                </div>
+
+                <div class="dynamic-section">
+                    <div class="section-header">
+                        <div class="section-title">Certificates & Achievements</div>
+                    </div>
+                    
+                    <div class="certificate-upload" onclick="document.getElementById('certificate-input').click()" 
+                         ondrop="handleDrop(event)" ondragover="handleDragOver(event)" ondragleave="handleDragLeave(event)">
+                        <input type="file" id="certificate-input" accept="image/*" multiple onchange="handleFileUpload(event)">
+                        <div class="upload-icon">☁️</div>
+                        <div class="upload-text">Click to upload certificates or drag & drop images here</div>
+                        <div class="upload-subtext">Supports JPG, PNG, GIF files</div>
+                    </div>
+                    
+                    <div class="certificate-preview" id="certificate-preview">
+                        <!-- Uploaded certificate previews will appear here -->
+                    </div>
+                </div>
+            </div>
+
+            <div class="preview-panel">
+                <div id="portfolio-preview" class="template-modern">
+                    <!-- Portfolio content will be generated here -->
+                </div>
+            </div>
+        </div>
+
+        <div class="bottom-bar">
+            <button id="downloadBtn" onclick="downloadPortfolio()">💾 Download Portfolio</button>
+            <button id="shareBtn" onclick="sharePortfolio()">🚀 Share Portfolio</button>
+        </div>
+    </div>
+
+    <!-- Share Modal -->
+    <div id="shareModal" style="display:none; position:fixed; top:0; left:0; width:100%; height:100%; background:rgba(0,0,0,0.6); align-items:center; justify-content:center; z-index:2000;">
+        <div style="background:white; padding:30px; border-radius:15px; max-width:500px; width:90%;">
+            <h2>🚀 Share Your Portfolio</h2>
+            <p>Copy your hosted portfolio link or share directly:</p>
+            <input type="text" id="portfolioUrl" readonly style="width:100%; padding:10px; margin:15px 0; border:1px solid #ccc; border-radius:8px;">
+            <button onclick="copyUrl()" style="padding:10px 20px; background:#28a745; color:white; border:none; border-radius:8px; cursor:pointer;">📋 Copy Link</button>
+            <div style="margin-top:20px; display:flex; gap:10px; flex-wrap:wrap;">
+                <a id="linkedinShare" target="_blank" class="share-btn">💼 LinkedIn</a>
+                <a id="twitterShare" target="_blank" class="share-btn">🐦 Twitter</a>
+                <a id="facebookShare" target="_blank" class="share-btn">📘 Facebook</a>
+                <a id="whatsappShare" target="_blank" class="share-btn">💬 WhatsApp</a>
+                <a id="emailShare" target="_blank" class="share-btn">📧 Email</a>
+            </div>
+            <button onclick="document.getElementById('shareModal').style.display='none'" style="margin-top:15px; padding:8px 15px; background:#6c757d; color:white; border:none; border-radius:8px; cursor:pointer;">Close</button>
+        </div>
+    </div>
+<footer class="footer">
+            <div class="footer-container">
+                <div class="footer-col">
+                    <div class="footer-logo">DigiPratibha</div>
+                    <p>The leading digital portfolio platform for students across India.</p>
+                    <div class="social-links">
+                        <a href="https://www.facebook.com"><i class="fab fa-facebook-f"></i></a>
+                        <a href="https://twitter.com"><i class="fab fa-twitter"></i></a>
+                        <a href="https://instagram.com"><i class="fab fa-instagram"></i></a>
+                        <a href="https://www.linkedin.com"><i class="fab fa-linkedin-in"></i></a>
+                    </div>
+                </div>
+                <div class="footer-col">
+                    <h4>Features</h4>
+                    <ul>
+                        <li><a href="drag_drop.html">Drag-and-Drop Builder</a></li>
+                        <li><a href="templates.html">Templates</a></li>
+                        <li><a href="drag_drop.html">Content Integration</a></li>
+                        <li><a href="drag_drop.html">One-Click Hosting</a></li>
+                        <li><a href="drag_drop.html">PDF Export</a></li>
+                    </ul>
+                </div>
+                <div class="footer-col">
+                    <h4>Resources</h4>
+                    <ul>
+                        <li><a href="blogs.html">Blog</a></li>
+                        <li><a href="blogs.html">Tutorials</a></li>
+                        <li><a href="blogs.html">Documentation</a></li>
+                        <li><a href="blogs.html">Support</a></li>
+                    </ul>
+                </div>
+                <div class="footer-col">
+                    <h4>Company</h4>
+                    <ul>
+                        <li><a href="blogs.html">About Us</a></li>
+                        <li><a href="blogs.html">Careers</a></li>
+                        <li><a href="build_portfolio.html">Contact Us</a></li>
+                        <li><a href="blogs.html">Privacy Policy</a></li>
+                        <li><a href="blogs.html">Terms of Service</a></li>
+                    </ul>
+                </div>
+            </div>
+        </footer>
+    <script src="templates.js"></script>
+    
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.9.3/html2pdf.bundle.min.js"></script>
+</body>
+</html>

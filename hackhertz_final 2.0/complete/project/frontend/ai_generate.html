@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>DigiPratibha AI Assistant</title>
+  <link rel="stylesheet" href="ai_genrate.css">
+</head>
+<body>
+   <header class="navbar">
+        <div class="logo">
+            <i class="fa-solid fa-graduation-cap"></i>
+            <span>DigiPratibha</span>
+        </div>
+        <nav class="nav-links">
+            <a href="home.html">Home</a>
+            <a href="templates.html">Templates</a>
+            <a href="ai_generate.html">ai_generate</a>
+            <a href="build_portfolio.html">build portfolio</a>
+            <a href="blogs.html">blogs</a>
+            <!-- <a href="#">My Portfo</a> -->
+        </nav>
+        <div class="auth-buttons">
+            <i id="theme-toggle" class="fas fa-sun toggle-icon"></i>
+            <a href="login.html" class="login-btn">Login</a>
+            <a href="signup.html" class="signup-btn">Sign Up</a>
+        </div>
+    </header>
+  <div class="chatbot-container">
+    <div class="chatbot-header">
+      <h2>DigiPratibha AI Assistant</h2>
+      <p>Your Study + Portfolio Helper</p>
+    </div>
+
+    <div class="chat-messages" id="chatMessages">
+      <div class="message bot">
+        <div class="bubble">
+          👋 Hi! I'm DigiPratibha Assistant. Choose what you need help with:
+        </div>
+      </div>
+    </div>
+
+    <div class="suggestions" id="suggestions">
+      <div class="chip" onclick="handleMainChoice('study help')">📚 Study Help</div>
+      <div class="chip" onclick="handleMainChoice('portfolio')">💼 Portfolio Builder</div>
+      <div class="chip" onclick="handleMainChoice('content generator')">✍️ Content Generator</div>
+      <div class="chip" onclick="handleMainChoice('assistant')">🤖 Smart Assistant</div>
+    </div>
+
+    <div class="chat-input-container">
+      <input type="text" id="chatInput" class="chat-input" placeholder="Type your message..." onkeypress="handleKey(event)">
+      <button class="send-button" onclick="sendMessage()">Send</button>
+    </div>
+  </div>
+
+        <footer class="footer">
+            <div class="footer-container">
+                <div class="footer-col">
+                    <div class="footer-logo">DigiPratibha</div>
+                    <p>The leading digital portfolio platform for students across India.</p>
+                    <div class="social-links">
+                        <a href="https://www.facebook.com/"><i class="fab fa-facebook-f"></i></a>
+                        <a href="https://twitter.com"><i class="fab fa-twitter"></i></a>
+                        <a href="https://instagram.com"><i class="fab fa-instagram"></i></a>
+                        <a href="https://www.linkedin.com"><i class="fab fa-linkedin-in"></i></a>
+                    </div>
+                </div>
+                <div class="footer-col">
+                    <h4>Features</h4>
+                    <ul>
+                        <li><a href="drag_drop.html">Drag-and-Drop Builder</a></li>
+                        <li><a href="templates.html">Templates</a></li>
+                        <li><a href="drag_drop.html">Content Integration</a></li>
+                        <li><a href="templates.html">One-Click Hosting</a></li>
+                        <li><a href="templates.html">PDF Export</a></li>
+                    </ul>
+                </div>
+                <div class="footer-col">
+                    <h4>Resources</h4>
+                    <ul>
+                        <li><a href="blogs.html">Blog</a></li>
+                        <li><a href="blogs.html">Tutorials</a></li>
+                        <li><a href="blogs.html">Documentation</a></li>
+                        <li><a href="blogs.html">Support</a></li>
+                    </ul>
+                </div>
+                <div class="footer-col">
+                    <h4>Company</h4>
+                    <ul>
+                        <li><a href="blogs.html">About Us</a></li>
+                        <li><a href="blogs.html">Careers</a></li>
+                        <li><a href="build_portfolio.html">Contact Us</a></li>
+                        <li><a href="login.html">Privacy Policy</a></li>
+                        <li><a href="blogs.html">Terms of Service</a></li>
+                    </ul>
+                </div>
+            </div>
+        </footer>
+  <script src="ai_generate.js"></script>
+</body>
+</html>

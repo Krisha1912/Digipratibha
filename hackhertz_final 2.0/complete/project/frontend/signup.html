@@ -1,0 +1,139 @@
+ <!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Sign Up - Digital Portfolio Platform</title>
+  <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+  <header class="navbar">
+        <div class="logo">
+            <i class="fa-solid fa-graduation-cap"></i>
+            <span>DigiPratibha</span>
+        </div>
+        <nav class="nav-links">
+            <a href="home.html">Home</a>
+            <a href="templates.html">Templates</a>
+            <a href="ai_generate.html">ai_generate</a>
+            <a href="build_portfolio.html">build portfolio</a>
+            <a href="blogs.html">blogs</a>
+        </nav>
+        <div class="auth-buttons">
+            <i id="theme-toggle" class="fas fa-sun toggle-icon"></i>
+            <a href="login.html" class="login-btn">Login</a>
+            <a href="signup.html" class="signup-btn">Sign Up</a>
+        </div>
+    </header>
+  <div class="auth-container">
+    <form class="auth-form" id="signupForm">
+      <h2>Create Your Account</h2>
+      
+      <div id="errorMessage" class="error" style="display: none;"></div>
+      <div id="successMessage" class="success" style="display: none;"></div>
+      
+      <div class="form-group">
+        <label for="name">Full Name</label>
+        <input type="text" id="name" name="name" required>
+      </div>
+      
+      <div class="form-group">
+        <label for="email">Email</label>
+        <input type="email" id="email" name="email" required>
+      </div>
+      
+      <div class="form-group">
+        <label for="password">Password</label>
+        <input type="password" id="password" name="password" required>
+        <small><a href="#" id="togglePassword">Show</a></small>
+      </div>
+      
+      <div class="form-group">
+        <label for="confirmPassword">Confirm Password</label>
+        <input type="password" id="confirmPassword" name="confirmPassword" required>
+        <small><a href="#" id="toggleConfirmPassword">Show</a></small>
+      </div>
+      
+      <div class="form-group">
+        <label for="role">I am a</label>
+        <select id="role" name="role" required>
+          <option value="">Select Role</option>
+          <option value="student">Student</option>
+          <option value="institute">Institute</option>
+        </select>
+      </div>
+      
+      <div id="studentFields" style="display: none;">
+        <div class="form-group">
+          <label for="bio">Bio</label>
+          <textarea id="bio" name="bio" placeholder="Tell us about yourself"></textarea>
+        </div>
+        
+        <div class="form-group">
+          <label for="skills">Skills</label>
+          <input type="text" id="skills" name="skills" placeholder="e.g., JavaScript, Design, Writing">
+        </div>
+      </div>
+      
+      <div id="instituteFields" style="display: none;">
+        <div class="form-group">
+          <label for="instituteBio">Institute Description</label>
+          <textarea id="instituteBio" name="instituteBio" placeholder="Tell us about your institute"></textarea>
+        </div>
+      </div>
+      
+      <button type="submit" class="btn">Create Account</button>
+      
+      <p class="text-center mt-3">
+        Already have an account? <a href="login.html">Login here</a>
+      </p>
+    </form>
+  </div>
+   <footer class="footer">
+            <div class="footer-container">
+                <div class="footer-col">
+                    <div class="footer-logo">DigiPratibha</div>
+                    <p>The leading digital portfolio platform for students across India.</p>
+                    <div class="social-links">
+                        <a href="https://www.facebook.com"><i class="fab fa-facebook-f"></i></a>
+                        <a href="https://twitter.com"><i class="fab fa-twitter"></i></a>
+                        <a href="https://instagram.com"><i class="fab fa-instagram"></i></a>
+                        <a href="https://www.linkedin.com"><i class="fab fa-linkedin-in"></i></a>
+                    </div>
+                </div>
+                <div class="footer-col">
+                    <h4>Features</h4>
+                    <ul>
+                        <li><a href="drag_drop.html">Drag-and-Drop Builder</a></li>
+                        <li><a href="templates.html">Templates</a></li>
+                        <li><a href="blogs.html">Content Integration</a></li>
+                        <li><a href="drag_drop.html">One-Click Hosting</a></li>
+                        <li><a href="drag_drop.html">PDF Export</a></li>
+                    </ul>
+                </div>
+                <div class="footer-col">
+                    <h4>Resources</h4>
+                    <ul>
+                        <li><a href="blogs.html">Blog</a></li>
+                        <li><a href="blogs.html">Tutorials</a></li>
+                        <li><a href="blogs.html">Documentation</a></li>
+                        <li><a href="blogs.html">Support</a></li>
+                    </ul>
+                </div>
+                <div class="footer-col">
+                    <h4>Company</h4>
+                    <ul>
+                        <li><a href="blogs.html">About Us</a></li>
+                        <li><a href="blogs.html">Careers</a></li>
+                        <li><a href="build_portfolio.html">Contact Us</a></li>
+                        <li><a href="build_portfolio.html">Privacy Policy</a></li>
+                        <li><a href="blogs.html">Terms of Service</a></li>
+                    </ul>
+                </div>
+            </div>
+        </footer>
+   
+  <script src="js/main.js"></script>
+  <script src="js/auth.js"></script>
+</body>
+</html>

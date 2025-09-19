@@ -1,0 +1,1088 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Blog - DigiPratibha</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <style>
+        :root {
+            --bg-color: #f4e8ff;
+            --text-color: #4a4a6a;
+            --card-bg-color: #ffffff;
+            --primary-color: #8a2be2;
+            --secondary-color: #ff69b4;
+            --shadow-light: rgba(138, 43, 226, 0.15);
+            --shadow-dark: rgba(138, 43, 226, 0.25);
+            --aura-light: 0 0 20px rgba(138, 43, 226, 0.3), 0 0 40px rgba(138, 43, 226, 0.2);
+            --glass-bg-color: rgba(255, 255, 255, 0.25);
+            --glass-border-color: rgba(255, 255, 255, 0.4);
+            --glass-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.1);
+        }
+
+        body.dark-mode {
+            --bg-color: #0a0e1a;
+            --text-color: #e0e0e0;
+            --card-bg-color: #1a1a1a;
+            --primary-color: #00bfff;
+            --secondary-color: #ff007f;
+            --shadow-light: rgba(0, 191, 255, 0.15);
+            --shadow-dark: rgba(0, 191, 255, 0.25);
+            --aura-light: 0 0 20px #00bfff, 0 0 40px #00bfff, 0 0 60px #ff007f, 0 0 80px #ff007f;
+            --glass-bg-color: rgba(26, 26, 26, 0.4);
+            --glass-border-color: rgba(255, 255, 255, 0.1);
+            --glass-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.1);
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Poppins', -apple-system, BlinkMacSystemFont, sans-serif;
+            line-height: 1.6;
+            color: var(--text-color);
+            background-color: var(--bg-color);
+            transition: background-color 0.3s, color 0.3s;
+        }/* General Styling & Reset */
+:root {
+    --bg-color: #f4e8ff; /* Pastel Purple Background */
+    --text-color: #4a4a6a;
+    --card-bg-color: #ffffff;
+    --primary-color: #8a2be2; /* Pastel Purple */
+    --secondary-color: #ff69b4; /* Pastel Pink */
+    --shadow-light: rgba(138, 43, 226, 0.15);
+    --shadow-dark: rgba(138, 43, 226, 0.25);
+    --aura-light: 0 0 20px rgba(138, 43, 226, 0.3), 0 0 40px rgba(138, 43, 226, 0.2);
+    --glass-bg-color: rgba(255, 255, 255, 0.25);
+    --glass-border-color: rgba(255, 255, 255, 0.4);
+    --glass-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.1);
+}
+
+body.dark-mode {
+    --bg-color: #0a0e1a; /* Dark Navy */
+    --text-color: #e0e0e0;
+    --card-bg-color: #1a1a1a;
+    --primary-color: #00bfff; /* Neon Blue */
+    --secondary-color: #ff007f; /* Neon Pink */
+    --shadow-light: rgba(0, 191, 255, 0.15);
+    --shadow-dark: rgba(0, 191, 255, 0.25);
+    --aura-light: 0 0 20px #00bfff, 0 0 40px #00bfff, 0 0 60px #ff007f, 0 0 80px #ff007f;
+    --glass-bg-color: rgba(26, 26, 26, 0.4);
+    --glass-border-color: rgba(255, 255, 255, 0.1);
+    --glass-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.1);
+}
+
+body {
+    font-family: 'Poppins', sans-serif;
+    line-height: 1.6;
+    color: var(--text-color);
+    background-color: var(--bg-color);
+    transition: background-color 0.3s, color 0.3s;
+}
+
+h1, h2, h3, h4 {
+    font-weight: 600;
+    line-height: 1.2;
+}
+
+a {
+    text-decoration: none;
+    color: inherit;
+    transition: color 0.3s;
+}
+
+button, .cta-button, .login-btn, .signup-btn, .guest-link {
+    cursor: pointer;
+    font-family: 'Poppins', sans-serif;
+    padding: 12px 24px;
+    border: none;
+    border-radius: 50px;
+    font-weight: 500;
+    transition: all 0.3s ease;
+}
+.btnnnn{
+    padding-top: 20px;
+    text-align: center;
+}
+.learn{
+    
+  display: block;
+  margin: 0 auto;
+
+}
+.subtitle {
+    font-size: 1rem;
+    color: var(--text-color);
+    margin-top: 10px;
+    opacity: 0.8;
+}
+
+section {
+    padding: 80px 5%;
+    text-align: center;
+}
+
+/* --- Navigation Bar --- */
+.navbar {
+    display: flex;
+    justify-content: space-evenly;
+    align-items: center;
+    padding: 15px 5%;
+    background-color: var(--card-bg-color);
+    box-shadow: 0 2px 10px var(--shadow-light);
+    position: fixed;
+    width: 100%;
+    top: 0;
+    left: 0;
+    z-index: 1000;
+}
+
+.logo {
+    display: flex;
+    align-items: center;
+    font-size: 1.5rem;
+    font-weight: 700;
+    color: var(--primary-color);
+}
+
+.logo i {
+    font-size: 1.8rem;
+    margin-right: 8px;
+    color: var(--primary-color);
+}
+
+.nav-links a {
+    margin: 0 15px;
+    color: var(--text-color);
+    font-weight: 500;
+    opacity: 0.8;
+}
+
+.nav-links a:hover, .nav-links a.active {
+    color: var(--primary-color);
+    opacity: 1;
+    transform: translateY(-2px);
+}
+
+.auth-buttons {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.toggle-icon {
+    font-size: 1.5rem;
+    cursor: pointer;
+    color: var(--text-color);
+    transition: color 0.3s;
+    animation: bounce-in 0.5s ease-out;
+}
+
+.auth-buttons .login-btn {
+    background: none;
+    color: var(--primary-color);
+    border: 2px solid var(--primary-color);
+    margin-right: 10px;
+}
+
+.auth-buttons .login-btn:hover {
+    background-color: var(--primary-color);
+    color: #fff;
+    transform: scale(1.05);
+}
+
+.auth-buttons .signup-btn {
+    background-color: var(--secondary-color);
+    color: #fff;
+    border: 2px solid var(--secondary-color);
+}
+
+.auth-buttons .signup-btn:hover {
+    background-color: #d62b5d;
+    border-color: #d62b5d;
+    transform: scale(1.05);
+}
+
+        /* Main Content */
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 100px 20px 50px;
+        }
+
+        .header {
+            text-align: center;
+            margin-bottom: 60px;
+        }
+
+        .header h1 {
+            font-size: 3rem;
+            margin-bottom: 15px;
+            color: var(--primary-color);
+            font-weight: 700;
+        }
+
+        .header p {
+            font-size: 1.2rem;
+            color: var(--text-color);
+            opacity: 0.8;
+            max-width: 600px;
+            margin: 0 auto;
+        }
+
+        /* Blog Filters */
+        .blog-filters {
+            display: flex;
+            justify-content: center;
+            gap: 15px;
+            margin-bottom: 50px;
+            flex-wrap: wrap;
+        }
+
+        .filter-btn {
+            padding: 10px 20px;
+            border: 2px solid var(--primary-color);
+            background: transparent;
+            color: var(--primary-color);
+            border-radius: 25px;
+            cursor: pointer;
+            transition: all 0.3s;
+            font-weight: 500;
+        }
+
+        .filter-btn.active,
+        .filter-btn:hover {
+            background: var(--primary-color);
+            color: white;
+        }
+
+        /* Search Bar */
+        .search-container {
+            max-width: 500px;
+            margin: 0 auto 50px;
+            position: relative;
+        }
+
+        .search-input {
+            width: 100%;
+            padding: 15px 50px 15px 20px;
+            border: 2px solid #e0e0e0;
+            border-radius: 25px;
+            font-size: 16px;
+            transition: all 0.3s;
+        }
+
+        .search-input:focus {
+            outline: none;
+            border-color: var(--primary-color);
+            box-shadow: 0 0 0 3px rgba(138, 43, 226, 0.1);
+        }
+
+        .search-btn {
+            position: absolute;
+            right: 10px;
+            top: 50%;
+            transform: translateY(-50%);
+            background: var(--primary-color);
+            color: white;
+            border: none;
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+
+        .search-btn:hover {
+            background: var(--secondary-color);
+        }
+
+        /* Blog Grid */
+        .blog-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+            gap: 70px;
+        }
+
+        .blog-card {
+            background: var(--card-bg-color);
+            border-radius: 20px;
+            overflow: hidden;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+            transition: all 0.3s ease;
+            cursor: pointer;
+        }
+
+        .blog-card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 20px 40px rgba(0,0,0,0.15);
+        }
+
+        .blog-image {
+            width: 100%;
+            height: 200px;
+            background: linear-gradient(135deg, var(--primary-color), var(--secondary-color));
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-size: 3rem;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .blog-content {
+            padding: 30px;
+        }
+
+        .blog-meta {
+            display: flex;
+            align-items: space-around;
+            gap: 15px;
+            margin-bottom: 15px;
+            font-size: 0.9rem;
+            color: #666;
+        }
+
+        .category-tag {
+            background: var(--primary-color);
+            color: white;
+            padding: 4px 12px;
+            border-radius: 15px;
+            font-size: 0.8rem;
+            font-weight: 500;
+        }
+
+        .blog-title {
+            font-size: 1.5rem;
+            font-weight: 600;
+            margin-bottom: 15px;
+            color: var(--text-color);
+            line-height: 1.3;
+        }
+
+        .blog-excerpt {
+            color: #666;
+            margin-bottom: 20px;
+            line-height: 1.6;
+        }
+
+        .blog-footer {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .read-more {
+            color: var(--primary-color);
+            text-decoration: none;
+            font-weight: 600;
+            display: flex;
+            align-items: center;
+            gap: 5px;
+            transition: all 0.3s;
+        }
+
+        .read-more:hover {
+            color: var(--secondary-color);
+        }
+
+        .read-time {
+            color: #999;
+            font-size: 0.9rem;
+        }
+
+        /* Featured Post */
+        .featured-post {
+            grid-column: 1 / -1;
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 0;
+            margin-bottom: 30px;
+        }
+
+        .featured-image {
+            background: linear-gradient(135deg, var(--primary-color), var(--secondary-color));
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-size: 4rem;
+        }
+
+        .featured-content {
+            padding: 40px;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+        }
+
+        .featured-tag {
+            background: var(--secondary-color);
+            color: white;
+            padding: 5px 15px;
+            border-radius: 15px;
+            font-size: 0.8rem;
+            font-weight: 600;
+            display: inline-block;
+            margin-bottom: 15px;
+            width: fit-content;
+        }
+
+        .featured-title {
+            font-size: 2.5rem;
+            font-weight: 700;
+            margin-bottom: 20px;
+            color: var(--text-color);
+            line-height: 1.2;
+        }
+
+        .featured-excerpt {
+            font-size: 1.1rem;
+            color: #666;
+            margin-bottom: 30px;
+            line-height: 1.6;
+        }
+
+        /* Pagination */
+        .pagination {
+            display: flex;
+            justify-content: center;
+            gap: 10px;
+            margin-top: 60px;
+        }
+
+        .page-btn {
+            width: 40px;
+            height: 40px;
+            border: 2px solid var(--primary-color);
+            background: transparent;
+            color: var(--primary-color);
+            border-radius: 50%;
+            cursor: pointer;
+            transition: all 0.3s;
+            font-weight: 500;
+        }
+
+        .page-btn.active,
+        .page-btn:hover {
+            background: var(--primary-color);
+            color: white;
+        }
+
+        /* --- Footer --- */
+.footer {
+    background-color: #2c3e50;
+    color: #fff;
+    padding: 50px 5%;
+}
+
+body.dark-mode .footer {
+    background-color: #0d121c;
+}
+
+.footer-container {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+    gap: 30px;
+    text-align: left;
+}
+
+.footer-col {
+    flex: 1;
+    min-width: 200px;
+}
+
+.footer-logo {
+    font-size: 1.8rem;
+    font-weight: 700;
+    margin-bottom: 15px;
+    color: var(--primary-color);
+}
+
+.footer-col p {
+    font-size: 0.9rem;
+    color: #ccc;
+    line-height: 1.8;
+}
+
+.social-links a {
+    color: #fff;
+    font-size: 1.2rem;
+    margin-right: 15px;
+    transition: color 0.3s ease;
+}
+
+.social-links a:hover {
+    color: var(--primary-color);
+    transform: scale(1.2);
+}
+
+.footer-col h4 {
+    font-size: 1.1rem;
+    margin-bottom: 20px;
+    color: #fff;
+    position: relative;
+}
+
+.footer-col h4::before {
+    content: '';
+    position: absolute;
+    left: 0;
+    bottom: -5px;
+    height: 2px;
+    width: 40px;
+    background-color: var(--primary-color);
+}
+
+.footer-col ul {
+    list-style: none;
+}
+
+.footer-col ul li:not(:last-child) {
+    margin-bottom: 10px;
+}
+
+.footer-col ul li a {
+    font-size: 0.9rem;
+    color: #ccc;
+    transition: color 0.3s ease;
+}
+
+.footer-col ul li a:hover {
+    color: #fff;
+}
+
+/* --- Auth Pages (Login/Signup) --- */
+.auth-page {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 100vh;
+    padding: 80px 5%;
+    position: relative;
+    overflow: hidden;
+}
+
+.background-image {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-image: url('https://images.unsplash.com/photo-1620912188448-f6048122a61c');
+    background-size: cover;
+    background-position: center;
+    z-index: -1;
+    transition: filter 0.3s;
+}
+
+.auth-page .glassmorphism {
+    position: relative;
+    z-index: 10;
+}
+
+body.dark-mode .background-image {
+    filter: brightness(0.4);
+}
+
+.auth-card {
+    width: 100%;
+    max-width: 400px;
+    padding: 40px;
+    border-radius: 10px;
+    text-align: left;
+}
+
+.glassmorphism {
+    background-color: var(--glass-bg-color);
+    border: 1px solid var(--glass-border-color);
+    backdrop-filter: blur(10px);
+    box-shadow: var(--glass-shadow);
+}
+
+.auth-card h2 {
+    text-align: center;
+    margin-bottom: 20px;
+    color: var(--text-color);
+    font-size: 1.8rem;
+}
+
+.form-group {
+    margin-bottom: 20px;
+}
+
+.form-group label {
+    display: block;
+    margin-bottom: 8px;
+    font-weight: 500;
+    color: var(--text-color);
+}
+
+.form-group input {
+    width: 100%;
+    padding: 12px;
+    border: 1px solid #ddd;
+    border-radius: 5px;
+    font-size: 1rem;
+    background-color: rgba(255, 255, 255, 0.1);
+    color: var(--text-color);
+    transition: border-color 0.3s ease;
+}
+
+body.dark-mode .form-group input {
+    border-color: #555;
+    background-color: rgba(0, 0, 0, 0.2);
+}
+
+.form-group input:focus {
+    outline: none;
+    border-color: var(--primary-color);
+}
+
+.cta-button {
+    width: 100%;
+    background-color: var(--secondary-color);
+    color: #fff;
+    padding: 15px;
+    font-weight: 600;
+    border-radius: 5px;
+    box-shadow: var(--aura-light);
+}
+
+.options-divider {
+    display: flex;
+    align-items: center;
+    text-align: center;
+    color: #aaa;
+    margin: 20px 0;
+}
+
+.options-divider::before,
+.options-divider::after {
+    content: '';
+    flex: 1;
+    border-bottom: 1px solid #ddd;
+}
+
+.options-divider:not(:empty)::before {
+    margin-right: .5em;
+}
+
+.options-divider:not(:empty)::after {
+    margin-left: .5em;
+}
+
+.guest-link {
+    display: block;
+    width: 100%;
+    padding: 15px;
+    text-align: center;
+    font-weight: 600;
+    color: var(--primary-color);
+    border: 2px solid var(--primary-color);
+    border-radius: 5px;
+    transition: background-color 0.3s ease, color 0.3s ease;
+    margin-bottom: 20px;
+}
+
+.guest-link:hover {
+    background-color: var(--primary-color);
+    color: #fff;
+}
+
+.switch-link {
+    text-align: center;
+    font-size: 0.9rem;
+    color: #666;
+}
+
+body.dark-mode .switch-link {
+    color: #bbb;
+}
+
+.switch-link a {
+    color: var(--primary-color);
+    font-weight: 600;
+}
+
+        /* Responsive Design */
+        @media (max-width: 768px) {
+            .navbar {
+                flex-direction: column;
+                padding: 10px 5%;
+                gap: 10px;
+            }
+
+            .header h1 {
+                font-size: 2.5rem;
+            }
+
+            .blog-filters {
+                gap: 10px;
+            }
+
+            .filter-btn {
+                padding: 8px 16px;
+                font-size: 0.9rem;
+            }
+
+            .blog-grid {
+                grid-template-columns: 1fr;
+                gap: 20px;
+            }
+
+            .featured-post {
+                grid-template-columns: 1fr;
+            }
+
+            .featured-title {
+                font-size: 2rem;
+            }
+
+            .newsletter {
+                padding: 30px 20px;
+            }
+
+            .newsletter h2 {
+                font-size: 2rem;
+            }
+
+            .newsletter-form {
+                flex-direction: column;
+            }
+
+            .footer-container {
+                flex-direction: column;
+                text-align: center;
+            }
+        }
+    </style>
+</head>
+<body>
+       <header class="navbar">
+        <div class="logo">
+            <i class="fa-solid fa-graduation-cap"></i>
+            <span>DigiPratibha</span>
+        </div>
+        <nav class="nav-links">
+            <a href="home.html">Home</a>
+            <a href="templates.html">Templates</a>
+            <a href="ai_generate.html">ai_generate</a>
+            <a href="build_portfolio.html">build portfolio</a>
+            <a href="blogs.html">blogs</a>
+            <!-- <a href="#">My Portfo</a> -->
+        </nav>
+        <div class="auth-buttons">
+            <i id="theme-toggle" class="fas fa-sun toggle-icon"></i>
+            <a href="login.html" class="login-btn">Login</a>
+            <a href="signup.html" class="signup-btn">Sign Up</a>
+        </div>
+    </header>
+
+    <div class="container">
+        <div class="header">
+            <h1>Our Blog</h1>
+            <p>Insights, tips, and guides to help you build the perfect portfolio and advance your career</p>
+        </div>
+
+        <!-- <div class="search-container">
+            <input type="text" class="search-input" placeholder="Search articles..." id="searchInput">
+            <button class="search-btn" onclick="searchBlogs()">
+                <i class="fas fa-search"></i>
+            </button>
+        </div> -->
+
+        <!-- <div class="blog-filters">
+            <button class="filter-btn active" onclick="filterBlogs('all')">All Posts</button>
+            <button class="filter-btn" onclick="filterBlogs('portfolio')">Portfolio Tips</button>
+            <button class="filter-btn" onclick="filterBlogs('career')">Career Advice</button>
+            <button class="filter-btn" onclick="filterBlogs('students')">For Students</button>
+            <button class="filter-btn" onclick="filterBlogs('templates')">Templates</button>
+            <button class="filter-btn" onclick="filterBlogs('institutions')">For Institutions</button>
+        </div> -->
+
+        <div class="blog-grid" id="blogGrid">
+            <!-- Featured Post -->
+            <article class="blog-card featured-post" data-category="portfolio">
+                <div class="featured-image">
+                    <i class="fas fa-trophy"></i>
+                </div>
+                <div class="featured-content">
+                    <span class="featured-tag">Featured</span>
+                    <h2 class="featured-title">10 Portfolio Mistakes That Cost You Job Opportunities</h2>
+                    <p class="featured-excerpt">Avoid these common portfolio pitfalls that turn recruiters away. Learn what hiring managers really look for and how to make your portfolio stand out in 2024.</p>
+                    <div class="blog-footer">
+                        <a href="https://medium.com/@shulioo4techies/5-key-mistakes-job-seekers-make-with-their-portfolio-and-how-to-avoid-them-7f7d09ed9631" class="read-more">Read Full Article <i class="fas fa-arrow-right"></i></a>
+                        <span class="read-time">8 min read</span>
+                    </div>
+                </div>
+            </article>
+
+            <!-- Regular Blog Posts -->
+            <article class="blog-card" data-category="students">
+                <div class="blog-image">
+                    <i class="fas fa-graduation-cap"></i>
+                </div>
+                <div class="blog-content">
+                    <div class="blog-meta">
+                        <span class="category-tag">For Students</span>
+                        <span>Dec 15, 2024</span>
+                    </div>
+                    <h3 class="blog-title">Student Portfolio Guide: From Zero to Hired</h3>
+                    <p class="blog-excerpt">Complete step-by-step guide for students to create their first professional portfolio, even without work experience.</p>
+                    <div class="blog-footer">
+                        <a href="https://www.bing.com/ck/a?!&&p=1eff6fe931535fa5518c3f3425e64ed157e62e3acf1bec969e31bc4f75ff0834JmltdHM9MTc1NzcyMTYwMA&ptn=3&ver=2&hsh=4&fclid=3bfb898b-7488-63ea-0abf-9c34753a627a&psq=student+portfolio+guide+from+zero+to+hiered+blog&u=a1aHR0cHM6Ly93d3cuaW5maWdvbmZ1dHVyZXMuY29tL2Jsb2dzL2EtZ3VpZGUtdG8tYnVpbGRpbmctYS1jYXJlZXItcG9ydGZvbGlvLWFzLWEtc3R1ZGVudA" class="read-more">Read More <i class="fas fa-arrow-right"></i></a>
+                        <span class="read-time">6 min read</span>
+                    </div>
+                </div>
+            </article>
+
+            <article class="blog-card" data-category="career">
+                <div class="blog-image">
+                    <i class="fas fa-briefcase"></i>
+                </div>
+                <div class="blog-content">
+                    <div class="blog-meta">
+                        <span class="category-tag">Career Advice</span>
+                        <span>Dec 12, 2024</span>
+                    </div>
+                    <h3 class="blog-title">How to Write a Compelling About Section</h3>
+                    <p class="blog-excerpt">Master the art of storytelling in your portfolio's about section. Learn frameworks that convert visitors into opportunities.</p>
+                    <div class="blog-footer">
+                        <a href="https://www.bing.com/ck/a?!&&p=45a3240fc28cfb6b59b09df58beaad915782f28687f97792dbb41976ace4d6a3JmltdHM9MTc1NzcyMTYwMA&ptn=3&ver=2&hsh=4&fclid=3bfb898b-7488-63ea-0abf-9c34753a627a&psq=how+to+write+compiling+about+section+blog&u=a1aHR0cHM6Ly93d3cud3BiZWdpbm5lci5jb20vd3AtdHV0b3JpYWxzL2hvdy10by13cml0ZS1hLWdyZWF0LWJsb2ctcG9zdC1zdHJ1Y3R1cmUtZXhhbXBsZXMv" class="read-more">Read More <i class="fas fa-arrow-right"></i></a>
+                        <span class="read-time">5 min read</span>
+                    </div>
+                </div>
+            </article>
+
+            <article class="blog-card" data-category="templates">
+                <div class="blog-image">
+                    <i class="fas fa-palette"></i>
+                </div>
+                <div class="blog-content">
+                    <div class="blog-meta">
+                        <span class="category-tag">Templates</span>
+                        <span>Dec 10, 2024</span>
+                    </div>
+                    <h3 class="blog-title">Choosing the Right Portfolio Template for Your Field</h3>
+                    <p class="blog-excerpt">Different industries have different expectations. Learn which template styles work best for tech, design, business, and more.</p>
+                    <div class="blog-footer">
+                        <a href="https://www.bing.com/ck/a?!&&p=021f672d7946cc1b4aff4dbd9b28579d2eaa287f4a2e6998981c1795dbb9a8a5JmltdHM9MTc1NzcyMTYwMA&ptn=3&ver=2&hsh=4&fclid=3bfb898b-7488-63ea-0abf-9c34753a627a&psq=choosing+right+portfolio+for+your+field+blog&u=a1aHR0cHM6Ly9lbGVtZW50b3IuY29tL2Jsb2cvaG93LXRvLW1ha2UtYS1wb3J0Zm9saW8td2Vic2l0ZS8" class="read-more">Read More <i class="fas fa-arrow-right"></i></a>
+                        <span class="read-time">7 min read</span>
+                    </div>
+                </div>
+            </article>
+
+            <article class="blog-card" data-category="interviews">
+                <div class="blog-image">
+                    <i class="fas fa-handshake"></i>
+                </div>
+                <div class="blog-content">
+                    <div class="blog-meta">
+                        <span class="category-tag">Interviews</span>
+                        <span>Dec 8, 2024</span>
+                    </div>
+                    <h3 class="blog-title">Using Your Portfolio in Job Interviews</h3>
+                    <p class="blog-excerpt">Transform your portfolio from a static showcase into a powerful interview tool. Learn presentation techniques that impress.</p>
+                    <div class="blog-footer">
+                        <a href="https://www.bing.com/ck/a?!&&p=32d5534ec3248a3d881f7d8ba126b0e611ca5863e23160fbfcd15b1f0831240eJmltdHM9MTc1NzcyMTYwMA&ptn=3&ver=2&hsh=4&fclid=3bfb898b-7488-63ea-0abf-9c34753a627a&psq=how+to+use+portfolio+for+job+interviw+blog&u=a1aHR0cHM6Ly93d3cuaW5kZWVkLmNvbS9jYXJlZXItYWR2aWNlL2ludGVydmlld2luZy9wb3J0Zm9saW8taW50ZXJ2aWV3" class="read-more">Read More <i class="fas fa-arrow-right"></i></a>
+                        <span class="read-time">4 min read</span>
+                    </div>
+                </div>
+            </article>
+
+            <article class="blog-card" data-category="portfolio">
+                <div class="blog-image">
+                    <i class="fas fa-chart-line"></i>
+                </div>
+                <div class="blog-content">
+                    <div class="blog-meta">
+                        <span class="category-tag">Portfolio Tips</span>
+                        <span>Dec 5, 2024</span>
+                    </div>
+                    <h3 class="blog-title">Portfolio Analytics: What Metrics Actually Matter</h3>
+                    <p class="blog-excerpt">Track the right metrics to understand how your portfolio performs and what improvements to prioritize.</p>
+                    <div class="blog-footer">
+                        <a href="https://www.bing.com/ck/a?!&&p=88bd8e714752facb51478c48f6a57e180db02df58d4b0443f2d82d5d13259706JmltdHM9MTc1NzcyMTYwMA&ptn=3&ver=2&hsh=4&fclid=3bfb898b-7488-63ea-0abf-9c34753a627a&psq=portfoio+analytic+blog&u=a1aHR0cHM6Ly9zdGFyYWdpbGUuY29tL2Jsb2cvZGF0YS1hbmFseXRpY3MtcG9ydGZvbGlv" class="read-more">Read More <i class="fas fa-arrow-right"></i></a>
+                        <span class="read-time">6 min read</span>
+                    </div>
+                </div>
+            </article>
+
+            <article class="blog-card" data-category="career">
+                <div class="blog-image">
+                    <i class="fas fa-network-wired"></i>
+                </div>
+                <div class="blog-content">
+                    <div class="blog-meta">
+                        <span class="category-tag">Career Advice</span>
+                        <span>Dec 3, 2024</span>
+                    </div>
+                    <h3 class="blog-title">Building Your Personal Brand Through Your Portfolio</h3>
+                    <p class="blog-excerpt">Your portfolio is more than a showcase—it's your personal brand. Learn how to craft a consistent, memorable professional identity.</p>
+                    <div class="blog-footer">
+                        <a href="https://www.bing.com/ck/a?!&&p=b9a46f5690336533a76d61c56995fc66d656550eec08140294a2539b28f05de9JmltdHM9MTc1NzcyMTYwMA&ptn=3&ver=2&hsh=4&fclid=3bfb898b-7488-63ea-0abf-9c34753a627a&psq=building+personal+brand+through+portfolio+blog&u=a1aHR0cHM6Ly9uZWlscGF0ZWwuY29tL2Jsb2cvYnVpbGQtcGVyc29uYWwtYnJhbmQtYmxvZ2dpbmcv" class="read-more">Read More <i class="fas fa-arrow-right"></i></a>
+                        <span class="read-time">9 min read</span>
+                    </div>
+                </div>
+            </article>
+        </div>
+
+       
+    </div>
+
+   
+    <footer class="footer">
+            <div class="footer-container">
+                <div class="footer-col">
+                    <div class="footer-logo">DigiPratibha</div>
+                    <p>The leading digital portfolio platform for students across India.</p>
+                    <div class="social-links">
+                        <a href="https://www.facebook.com/"><i class="fab fa-facebook-f"></i></a>
+                        <a href="https://twitter.com"><i class="fab fa-twitter"></i></a>
+                        <a href="https://instagram.com"><i class="fab fa-instagram"></i></a>
+                        <a href="https://www.linkedin.com"><i class="fab fa-linkedin-in"></i></a>
+                    </div>
+                </div>
+                <div class="footer-col">
+                    <h4>Features</h4>
+                    <ul>
+                        <li><a href="drag_drop.html">Drag-and-Drop Builder</a></li>
+                        <li><a href="templates.html">Templates</a></li>
+                        <li><a href="blogs.html">Content Integration</a></li>
+                        <li><a href="drag_drop.html">One-Click Hosting</a></li>
+                        <li><a href="templates.html">PDF Export</a></li>
+                    </ul>
+                </div>
+                <div class="footer-col">
+                    <h4>Resources</h4>
+                    <ul>
+                        <li><a href="blogs.html">Blog</a></li>
+                        <li><a href="blogs.html">Tutorials</a></li>
+                        <li><a href="blogs.html">Documentation</a></li>
+                        <li><a href="blogs.html">Support</a></li>
+                    </ul>
+                </div>
+                <div class="footer-col">
+                    <h4>Company</h4>
+                    <ul>
+                        <li><a href="blogs.html">About Us</a></li>
+                        <li><a href="blogs.html">Careers</a></li>
+                        <li><a href="build_portfolio.html">Contact Us</a></li>
+                        <li><a href="login.html">Privacy Policy</a></li>
+                        <li><a href="blogs.html">Terms of Service</a></li>
+                    </ul>
+                </div>
+            </div>
+        </footer>
+ 
+    <script>
+        // Theme Toggle
+        document.addEventListener('DOMContentLoaded', () => {
+            const themeToggle = document.getElementById('theme-toggle');
+            const body = document.body;
+
+            const savedTheme = localStorage.getItem('theme');
+            const prefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
+
+            if (savedTheme === 'dark' || (!savedTheme && prefersDark)) {
+                body.classList.add('dark-mode');
+                themeToggle.classList.remove('fa-sun');
+                themeToggle.classList.add('fa-moon');
+            }
+
+            themeToggle.addEventListener('click', () => {
+                body.classList.toggle('dark-mode');
+                if (body.classList.contains('dark-mode')) {
+                    themeToggle.classList.remove('fa-sun');
+                    themeToggle.classList.add('fa-moon');
+                    localStorage.setItem('theme', 'dark');
+                } else {
+                    themeToggle.classList.remove('fa-moon');
+                    themeToggle.classList.add('fa-sun');
+                    localStorage.setItem('theme', 'light');
+                }
+            });
+        });
+
+        // Blog Filtering
+        function filterBlogs(category) {
+            const blogCards = document.querySelectorAll('.blog-card:not(.featured-post)');
+            const filterBtns = document.querySelectorAll('.filter-btn');
+            
+            // Update active filter button
+            filterBtns.forEach(btn => btn.classList.remove('active'));
+            event.target.classList.add('active');
+            
+            // Show/hide blog cards
+            blogCards.forEach(card => {
+                if (category === 'all' || card.dataset.category === category) {
+                    card.style.display = 'block';
+                    card.style.animation = 'fadeIn 0.5s ease-in';
+                } else {
+                    card.style.display = 'none';
+                }
+            });
+        }
+
+        // Search Functionality
+        function searchBlogs() {
+            const searchTerm = document.getElementById('searchInput').value.toLowerCase();
+            const blogCards = document.querySelectorAll('.blog-card');
+            
+            blogCards.forEach(card => {
+                const title = card.querySelector('.blog-title, .featured-title').textContent.toLowerCase();
+                const excerpt = card.querySelector('.blog-excerpt, .featured-excerpt').textContent.toLowerCase();
+                
+                if (title.includes(searchTerm) || excerpt.includes(searchTerm)) {
+                    card.style.display = 'block';
+                } else {
+                    card.style.display = 'none';
+                }
+            });
+        }
+
+        // Search on Enter key
+        document.getElementById('searchInput').addEventListener('keypress', function(e) {
+            if (e.key === 'Enter') {
+                searchBlogs();
+            }
+        });
+
+        // Newsletter Subscription
+        document.querySelector('.newsletter-btn').addEventListener('click', function() {
+            const email = document.querySelector('.newsletter-input').value;
+            if (email) {
+                alert('Thank you for subscribing! You will receive our latest updates.');
+                document.querySelector('.newsletter-input').value = '';
+            }
+        });
+
+        // Pagination
+        document.querySelectorAll('.page-btn').forEach(btn => {
+            btn.addEventListener('click', function() {
+                document.querySelectorAll('.page-btn').forEach(b => b.classList.remove('active'));
+                this.classList.add('active');
+                
+                // Simulate page loading
+                window.scrollTo({ top: 0, behavior: 'smooth' });
+            });
+        });
+
+        // Add fade-in animation
+        const style = document.createElement('style');
+        style.textContent = `
+            @keyframes fadeIn {
+                from { opacity: 0; transform: translateY(20px); }
+                to { opacity: 1; transform: translateY(0); }
+            }
+        `;
+        document.head.appendChild(style);
+    </script>
+</body>
+</html>

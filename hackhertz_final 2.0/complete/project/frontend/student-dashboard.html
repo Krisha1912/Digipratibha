@@ -1,0 +1,1159 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Student Portfolio Dashboard</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        :root {
+            --primary: #4361ee;
+            --secondary: #3f37c9;
+            --success: #4cc9f0;
+            --light: #f8f9fa;
+            --dark: #212529;
+            --primary-color: #4361ee;
+            --secondary-color: #3f37c9;
+            --accent-color: #ff7e5f;
+            --light-color: #f5f7fa;
+            --dark-color: #212529;
+            --success-color: #2ecc71;
+            --warning-color: #f39c12;
+            --danger-color: #e74c3c;
+        }
+        
+        body {
+            background-color: #f5f7fb;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+        
+        .sidebar {
+            height: 100vh;
+            background: var(--primary);
+            color: white;
+            position: fixed;
+            transition: all 0.3s;
+        }
+        
+        .sidebar .nav-link {
+            color: rgba(255, 255, 255, 0.8);
+            padding: 0.8rem 1rem;
+            margin: 0.2rem 0;
+            border-radius: 0.3rem;
+        }
+        
+        .sidebar .nav-link:hover,
+        .sidebar .nav-link.active {
+            color: white;
+            background: rgba(255, 255, 255, 0.1);
+        }
+        
+        .main-content {
+            margin-left: 250px;
+            padding: 20px;
+            transition: all 0.3s;
+        }
+        
+        .card-stats {
+            border-radius: 12px;
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.08);
+            transition: transform 0.3s;
+        }
+        
+        .card-stats:hover {
+            transform: translateY(-5px);
+        }
+        
+        .progress {
+            height: 10px;
+            border-radius: 5px;
+        }
+        
+        .portfolio-item {
+            border-radius: 12px;
+            overflow: hidden;
+            transition: transform 0.3s;
+        }
+        
+        .portfolio-item:hover {
+            transform: translateY(-5px);
+        }
+        
+        .avatar {
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            object-fit: cover;
+        }
+        
+        .dashboard-card {
+            border: none;
+            border-radius: 12px;
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.08);
+        }
+        
+        /* Skill Visualization Styles */
+        .skill-card {
+            background-color: white;
+            border-radius: 10px;
+            padding: 20px;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            transition: transform 0.3s ease;
+            position: relative;
+            height: 100%;
+        }
+        
+        .skill-card:hover {
+            transform: translateY(-5px);
+        }
+        
+        .skill-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 15px;
+        }
+        
+        .skill-title {
+            font-size: 1.2rem;
+            font-weight: 600;
+            color: var(--primary-color);
+        }
+        
+        .skill-icon {
+            width: 40px;
+            height: 40px;
+            background-color: var(--light-color);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: var(--primary-color);
+        }
+        
+        .skill-progress {
+            height: 10px;
+            background-color: var(--light-color);
+            border-radius: 5px;
+            margin-bottom: 10px;
+            overflow: hidden;
+        }
+        
+        .skill-progress-bar {
+            height: 100%;
+            border-radius: 5px;
+            transition: width 0.5s ease;
+        }
+        
+        .skill-info {
+            display: flex;
+            justify-content: space-between;
+            font-size: 0.9rem;
+            color: #777;
+        }
+        
+        .skill-actions {
+            margin-top: 15px;
+            display: flex;
+            gap: 10px;
+        }
+        
+        .btn-increase {
+            background-color: var(--success-color);
+            color: white;
+        }
+        
+        .btn-decrease {
+            background-color: var(--danger-color);
+            color: white;
+        }
+        
+        .btn-edit {
+            background-color: var(--secondary-color);
+            color: white;
+        }
+        
+        .btn-delete {
+            background-color: var(--danger-color);
+            color: white;
+            position: absolute;
+            top: 10px;
+            right: 10px;
+            width: 30px;
+            height: 30px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 0;
+        }
+        
+        .chart-container {
+            position: relative;
+            width: 200px;
+            height: 200px;
+        }
+        
+        .chart-center {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            text-align: center;
+        }
+        
+        .chart-value {
+            font-size: 2rem;
+            font-weight: bold;
+            color: var(--primary-color);
+        }
+        
+        .chart-label {
+            font-size: 0.9rem;
+            color: #777;
+        }
+        
+        .modal {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.5);
+            justify-content: center;
+            align-items: center;
+            z-index: 1000;
+        }
+        
+        .modal-content {
+            background-color: white;
+            padding: 30px;
+            border-radius: 10px;
+            width: 90%;
+            max-width: 500px;
+            max-height: 90vh;
+            overflow-y: auto;
+        }
+        
+        .modal-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 20px;
+        }
+        
+        .close-modal {
+            background: none;
+            border: none;
+            font-size: 1.5rem;
+            cursor: pointer;
+            color: #777;
+        }
+        
+        .form-group {
+            margin-bottom: 15px;
+        }
+        
+        .empty-state {
+            text-align: center;
+            padding: 40px;
+            background-color: white;
+            border-radius: 10px;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            grid-column: 1 / -1;
+        }
+        
+        @media (max-width: 768px) {
+            .sidebar {
+                width: 80px !important;
+                text-align: center;
+            }
+            
+            .sidebar .nav-link span {
+                display: none;
+            }
+            
+            .sidebar .nav-link i {
+                margin-right: 0;
+            }
+            
+            .main-content {
+                margin-left: 80px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container-fluid">
+        <div class="row">
+            <!-- Sidebar -->
+            <div class="sidebar col-md-3 col-lg-2 p-0" style="width: 250px;">
+                <div class="d-flex flex-column align-items-center align-items-sm-start px-3 pt-4">
+                    <h4 class="my-4 text-center w-100">Student Portfolio</h4>
+                    <hr class="w-100 bg-light">
+                    <ul class="nav nav-pills flex-column mb-sm-auto mb-0 align-items-center align-items-sm-start w-100" id="menu">
+                        <li class="nav-item w-100">
+                            <a href="#" class="nav-link active" id="dashboard-tab">
+                                <i class="fas fa-home me-2"></i><span>Dashboard</span>
+                            </a>
+                        </li>
+                        <li class="nav-item w-100">
+                            <a href="#" class="nav-link" id="profile-tab">
+                                <i class="fas fa-user me-2"></i><span>Profile</span>
+                            </a>
+                        </li>
+                        <li class="nav-item w-100">
+                            <a href="#" class="nav-link" id="portfolio-tab">
+                                <i class="fas fa-briefcase me-2"></i><span>Portfolio</span>
+                            </a>
+                        </li>
+                        <li class="nav-item w-100">
+                            <a href="#" class="nav-link" id="skills-tab">
+                                <i class="fas fa-chart-line me-2"></i><span>Skills</span>
+                            </a>
+                        </li>
+                        <li class="nav-item w-100">
+                            <a href="#" class="nav-link" id="settings-tab">
+                                <i class="fas fa-cog me-2"></i><span>Settings</span>
+                            </a>
+                        </li>
+                    </ul>
+                    <hr class="w-100 bg-light">
+                    <div class="dropdown pb-4 w-100">
+                        <a href="#" class="d-flex align-items-center text-white text-decoration-none dropdown-toggle" id="dropdownUser1" data-bs-toggle="dropdown" aria-expanded="false">
+                            <img src="https://via.placeholder.com/40" alt="User" class="avatar rounded-circle me-2">
+                            <span class="d-none d-sm-inline mx-1" id="username-sidebar">John Smith</span>
+                        </a>
+                        <ul class="dropdown-menu dropdown-menu-dark text-small shadow">
+                            <li><a class="dropdown-item" href="#">Profile</a></li>
+                            <li><a class="dropdown-item" href="#">Settings</a></li>
+                            <li><hr class="dropdown-divider"></li>
+                            <li><a class="dropdown-item" href="login.html" id="logout-btn">Sign out</a></li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Main Content -->
+            <div class="main-content col-md-9 ms-sm-auto col-lg-10 px-md-4">
+                <!-- Dashboard Section -->
+                <div id="dashboard-section">
+                    <div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 pb-2 mb-3 border-bottom">
+                        <h1 class="h2">Dashboard</h1>
+                        <div class="btn-toolbar mb-2 mb-md-0">
+                            <div class="btn-group me-2">
+                                <button type="button" class="btn btn-sm btn-outline-secondary">Share</button>
+                                <button type="button" class="btn btn-sm btn-outline-secondary">Export</button>
+                            </div>
+                            <button type="button" class="btn btn-sm btn-outline-secondary dropdown-toggle">
+                                <i class="fas fa-calendar"></i> This week
+                            </button>
+                        </div>
+                    </div>
+
+                    <!-- Stats Cards -->
+                    <div class="row mb-4">
+                        <div class="col-xl-3 col-md-6 mb-4">
+                            <div class="card card-stats border-0 shadow h-100 py-2 bg-primary text-white">
+                                <div class="card-body">
+                                    <div class="row no-gutters align-items-center">
+                                        <div class="col mr-2">
+                                            <div class="text-xs font-weight-bold text-uppercase mb-1">Courses Completed</div>
+                                            <div class="h5 mb-0 font-weight-bold">12/20</div>
+                                        </div>
+                                        <div class="col-auto">
+                                            <i class="fas fa-graduation-cap fa-2x"></i>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="col-xl-3 col-md-6 mb-4">
+                            <div class="card card-stats border-0 shadow h-100 py-2 bg-success text-white">
+                                <div class="card-body">
+                                    <div class="row no-gutters align-items-center">
+                                        <div class="col mr-2">
+                                            <div class="text-xs font-weight-bold text-uppercase mb-1">Average Grade</div>
+                                            <div class="h5 mb-0 font-weight-bold">87%</div>
+                                        </div>
+                                        <div class="col-auto">
+                                            <i class="fas fa-chart-line fa-2x"></i>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="col-xl-3 col-md-6 mb-4">
+                            <div class="card card-stats border-0 shadow h-100 py-2 bg-warning text-dark">
+                                <div class="card-body">
+                                    <div class="row no-gutters align-items-center">
+                                        <div class="col mr-2">
+                                            <div class="text-xs font-weight-bold text-uppercase mb-1">Projects</div>
+                                            <div class="h5 mb-0 font-weight-bold">8</div>
+                                        </div>
+                                        <div class="col-auto">
+                                            <i class="fas fa-briefcase fa-2x"></i>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="col-xl-3 col-md-6 mb-4">
+                            <div class="card card-stats border-0 shadow h-100 py-2 bg-info text-white">
+                                <div class="card-body">
+                                    <div class="row no-gutters align-items-center">
+                                        <div class="col mr-2">
+                                            <div class="text-xs font-weight-bold text-uppercase mb-1">Certificates</div>
+                                            <div class="h5 mb-0 font-weight-bold">5</div>
+                                        </div>
+                                        <div class="col-auto">
+                                            <i class="fas fa-award fa-2x"></i>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Progress and Skills -->
+                    <div class="row">
+                        <!-- Progress Overview -->
+                        <div class="col-xl-8 col-lg-7">
+                            <div class="card dashboard-card shadow mb-4">
+                                <div class="card-header py-3 d-flex flex-row align-items-center justify-content-between">
+                                    <h6 class="m-0 font-weight-bold text-primary">Progress Overview</h6>
+                                </div>
+                                <div class="card-body">
+                                    <div class="mb-4">
+                                        <h6 class="font-weight-bold">Web Development</h6>
+                                        <div class="progress mb-3">
+                                            <div class="progress-bar bg-success" role="progressbar" style="width: 75%" aria-valuenow="75" aria-valuemin="0" aria-valuemax="100"></div>
+                                        </div>
+                                    </div>
+                                    <div class="mb-4">
+                                        <h6 class="font-weight-bold">Data Structures</h6>
+                                        <div class="progress mb-3">
+                                            <div class="progress-bar bg-info" role="progressbar" style="width: 60%" aria-valuenow="60" aria-valuemin="0" aria-valuemax="100"></div>
+                                        </div>
+                                    </div>
+                                    <div class="mb-4">
+                                        <h6 class="font-weight-bold">Machine Learning</h6>
+                                        <div class="progress mb-3">
+                                            <div class="progress-bar bg-warning" role="progressbar" style="width: 45%" aria-valuenow="45" aria-valuemin="0" aria-valuemax="100"></div>
+                                        </div>
+                                    </div>
+                                    <div class="mb-4">
+                                        <h6 class="font-weight-bold">Database Systems</h6>
+                                        <div class="progress mb-3">
+                                            <div class="progress-bar bg-danger" role="progressbar" style="width: 80%" aria-valuenow="80" aria-valuemin="0" aria-valuemax="100"></div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Skills Overview -->
+                        <div class="col-xl-4 col-lg-5">
+                            <div class="card dashboard-card shadow mb-4">
+                                <div class="card-header py-3 d-flex flex-row align-items-center justify-content-between">
+                                    <h6 class="m-0 font-weight-bold text-primary">Skills Overview</h6>
+                                </div>
+                                <div class="card-body">
+                                    <div class="mb-3">
+                                        <div class="d-flex align-items-center">
+                                            <div class="bg-primary rounded-circle p-2 me-3">
+                                                <i class="fas fa-code text-white"></i>
+                                            </div>
+                                            <div>
+                                                <h6 class="mb-0">JavaScript</h6>
+                                                <small class="text-muted">75% Mastery</small>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="mb-3">
+                                        <div class="d-flex align-items-center">
+                                            <div class="bg-success rounded-circle p-2 me-3">
+                                                <i class="fas fa-html5 text-white"></i>
+                                            </div>
+                                            <div>
+                                                <h6 class="mb-0">HTML/CSS</h6>
+                                                <small class="text-muted">85% Mastery</small>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="mb-3">
+                                        <div class="d-flex align-items-center">
+                                            <div class="bg-info rounded-circle p-2 me-3">
+                                                <i class="fab fa-python text-white"></i>
+                                            </div>
+                                            <div>
+                                                <h6 class="mb-0">Python</h6>
+                                                <small class="text-muted">60% Mastery</small>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="mb-3">
+                                        <div class="d-flex align-items-center">
+                                            <div class="bg-warning rounded-circle p-2 me-3">
+                                                <i class="fas fa-comments text-white"></i>
+                                            </div>
+                                            <div>
+                                                <h6 class="mb-0">Communication</h6>
+                                                <small class="text-muted">80% Mastery</small>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="text-center mt-3">
+                                        <a href="#" class="btn btn-sm btn-outline-primary" id="view-all-skills">View All Skills</a>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Profile Section (Hidden by default) -->
+                <div id="profile-section" class="d-none">
+                    <div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 pb-2 mb-3 border-bottom">
+                        <h1 class="h2">My Profile</h1>
+                    </div>
+                    
+                    <div class="row">
+                        <div class="col-lg-4">
+                            <div class="card dashboard-card shadow mb-4">
+                                <div class="card-body text-center">
+                                    <img src="https://via.placeholder.com/150" alt="Profile" class="rounded-circle img-fluid" style="width: 150px;">
+                                    <h5 class="my-3" id="profile-name">John Smith</h5>
+                                    <p class="text-muted mb-1">Computer Science Student</p>
+                                    <p class="text-muted mb-4">Stanford University</p>
+                                    <div class="d-flex justify-content-center mb-2">
+                                        <button type="button" class="btn btn-primary">Edit Picture</button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-lg-8">
+                            <div class="card dashboard-card shadow mb-4">
+                                <div class="card-body">
+                                    <form id="profile-form">
+                                        <div class="row">
+                                            <div class="col-sm-6">
+                                                <div class="mb-3">
+                                                    <label for="firstName" class="form-label">First Name</label>
+                                                    <input type="text" class="form-control" id="firstName" value="John">
+                                                </div>
+                                            </div>
+                                            <div class="col-sm-6">
+                                                <div class="mb-3">
+                                                    <label for="lastName" class="form-label">Last Name</label>
+                                                    <input type="text" class="form-control" id="lastName" value="Smith">
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="row">
+                                            <div class="col-sm-6">
+                                                <div class="mb-3">
+                                                    <label for="email" class="form-label">Email</label>
+                                                    <input type="email" class="form-control" id="email" value="john.smith@example.com">
+                                                </div>
+                                            </div>
+                                            <div class="col-sm-6">
+                                                <div class="mb-3">
+                                                    <label for="phone" class="form-label">Phone</label>
+                                                    <input type="text" class="form-control" id="phone" value="(123) 456-7890">
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="mb-3">
+                                            <label for="university" class="form-label">University</label>
+                                            <input type="text" class="form-control" id="university" value="Stanford University">
+                                        </div>
+                                        <div class="mb-3">
+                                            <label for="bio" class="form-label">Bio</label>
+                                            <textarea class="form-control" id="bio" rows="4">I am a computer science student with a passion for web development and machine learning.</textarea>
+                                        </div>
+                                        <button type="submit" class="btn btn-primary">Save Changes</button>
+                                    </form>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Portfolio Section (Hidden by default) -->
+                <div id="portfolio-section" class="d-none">
+                    <div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 pb-2 mb-3 border-bottom">
+                        <h1 class="h2">My Portfolio</h1>
+                        <button class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#addPortfolioModal">
+                            <i class="fas fa-plus me-1"></i> Add Item
+                        </button>
+                    </div>
+                    
+                    <div class="row" id="portfolio-items">
+                        <!-- Portfolio items will be dynamically added here -->
+                    </div>
+                </div>
+
+                <!-- Skills Section (Hidden by default) -->
+                <div id="skills-section" class="d-none">
+                    <div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 pb-2 mb-3 border-bottom">
+                        <h1 class="h2">My Skills</h1>
+                        <button class="btn btn-primary" id="btnAddSkill">
+                            <i class="fas fa-plus me-1"></i> Add New Skill
+                        </button>
+                    </div>
+                    
+                    <div class="card dashboard-card shadow mb-4">
+                        <div class="card-header py-3">
+                            <h6 class="m-0 font-weight-bold text-primary">Overall Skill Progress</h6>
+                        </div>
+                        <div class="card-body">
+                            <div class="progress-chart d-flex justify-content-center">
+                                <div class="chart-container">
+                                    <canvas id="overallChart" width="200" height="200"></canvas>
+                                    <div class="chart-center">
+                                        <div class="chart-value" id="overallPercentage">0%</div>
+                                        <div class="chart-label">Mastery</div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="row" id="skillsContainer">
+                        <!-- Skills will be dynamically added here -->
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Add Portfolio Modal -->
+    <div class="modal fade" id="addPortfolioModal" tabindex="-1" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title">Add Portfolio Item</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <form id="add-portfolio-form">
+                        <div class="mb-3">
+                            <label for="portfolioTitle" class="form-label">Title</label>
+                            <input type="text" class="form-control" id="portfolioTitle" required>
+                        </div>
+                        <div class="mb-3">
+                            <label for="portfolioCategory" class="form-label">Category</label>
+                            <select class="form-select" id="portfolioCategory" required>
+                                <option value="">Select a category</option>
+                                <option value="Web Development">Web Development</option>
+                                <option value="Data Science">Data Science</option>
+                                <option value="UI/UX Design">UI/UX Design</option>
+                                <option value="Mobile Development">Mobile Development</option>
+                                <option value="Database Systems">Database Systems</option>
+                            </select>
+                        </div>
+                        <div class="mb-3">
+                            <label for="portfolioDescription" class="form-label">Description</label>
+                            <textarea class="form-control" id="portfolioDescription" rows="3" required></textarea>
+                        </div>
+                        <div class="mb-3">
+                            <label for="portfolioImage" class="form-label">Image URL</label>
+                            <input type="url" class="form-control" id="portfolioImage">
+                        </div>
+                        <div class="mb-3">
+                            <label for="portfolioDate" class="form-label">Date</label>
+                            <input type="date" class="form-control" id="portfolioDate" required>
+                        </div>
+                    </form>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
+                    <button type="button" class="btn btn-primary" id="save-portfolio-btn">Save</button>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <!-- Add Skill Modal -->
+    <div class="modal" id="addModal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h2>Add New Skill</h2>
+                <button class="close-modal">&times;</button>
+            </div>
+            <form id="addForm">
+                <div class="form-group">
+                    <label for="addSkillName">Skill Name</label>
+                    <input type="text" id="addSkillName" class="form-control" required>
+                </div>
+                <div class="form-group">
+                    <label for="addSkillLevel">Skill Level (0-100)</label>
+                    <input type="number" id="addSkillLevel" class="form-control" min="0" max="100" required>
+                </div>
+                <div class="form-group">
+                    <label for="addSkillCategory">Category</label>
+                    <select id="addSkillCategory" class="form-select">
+                        <option value="technical">Technical</option>
+                        <option value="soft">Soft Skills</option>
+                        <option value="language">Languages</option>
+                        <option value="other">Other</option>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label for="addSkillIcon">Icon (1-2 characters)</label>
+                    <input type="text" id="addSkillIcon" class="form-control" maxlength="2" required>
+                </div>
+                <button type="submit" class="btn btn-primary w-100">Add Skill</button>
+            </form>
+        </div>
+    </div>
+    
+    <!-- Edit Skill Modal -->
+    <div class="modal" id="editModal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h2>Edit Skill</h2>
+                <button class="close-modal">&times;</button>
+            </div>
+            <form id="editForm">
+                <input type="hidden" id="editIndex">
+                <div class="form-group">
+                    <label for="editSkillName">Skill Name</label>
+                    <input type="text" id="editSkillName" class="form-control" required>
+                </div>
+                <div class="form-group">
+                    <label for="editSkillLevel">Skill Level (0-100)</label>
+                    <input type="number" id="editSkillLevel" class="form-control" min="0" max="100" required>
+                </div>
+                <div class="form-group">
+                    <label for="editSkillCategory">Category</label>
+                    <select id="editSkillCategory" class="form-select">
+                        <option value="technical">Technical</option>
+                        <option value="soft">Soft Skills</option>
+                        <option value="language">Languages</option>
+                        <option value="other">Other</option>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label for="editSkillIcon">Icon (1-2 characters)</label>
+                    <input type="text" id="editSkillIcon" class="form-control" maxlength="2" required>
+                </div>
+                <button type="submit" class="btn btn-primary w-100">Save Changes</button>
+            </form>
+        </div>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script>
+        // Tab switching functionality
+        document.getElementById('dashboard-tab').addEventListener('click', function() {
+            showSection('dashboard-section');
+        });
+        
+        document.getElementById('profile-tab').addEventListener('click', function() {
+            showSection('profile-section');
+        });
+        
+        document.getElementById('portfolio-tab').addEventListener('click', function() {
+            showSection('portfolio-section');
+            loadPortfolioItems();
+        });
+        
+        document.getElementById('skills-tab').addEventListener('click', function() {
+            showSection('skills-section');
+            renderSkills();
+        });
+        
+        document.getElementById('view-all-skills').addEventListener('click', function(e) {
+            e.preventDefault();
+            document.getElementById('skills-tab').click();
+        });
+
+        function showSection(sectionId) {
+            // Hide all sections
+            document.getElementById('dashboard-section').classList.add('d-none');
+            document.getElementById('profile-section').classList.add('d-none');
+            document.getElementById('portfolio-section').classList.add('d-none');
+            document.getElementById('skills-section').classList.add('d-none');
+            
+            // Remove active class from all tabs
+            document.querySelectorAll('.nav-link').forEach(tab => {
+                tab.classList.remove('active');
+            });
+            
+            // Show the selected section and activate the corresponding tab
+            document.getElementById(sectionId).classList.remove('d-none');
+            
+            // Activate the corresponding tab
+            if (sectionId === 'dashboard-section') {
+                document.getElementById('dashboard-tab').classList.add('active');
+            } else if (sectionId === 'profile-section') {
+                document.getElementById('profile-tab').classList.add('active');
+            } else if (sectionId === 'portfolio-section') {
+                document.getElementById('portfolio-tab').classList.add('active');
+            } else if (sectionId === 'skills-section') {
+                document.getElementById('skills-tab').classList.add('active');
+            }
+        }
+
+        // Sample portfolio data
+        let portfolioItems = [
+            {
+                id: 1,
+                title: "E-commerce Website",
+                category: "Web Development",
+                description: "A fully functional e-commerce website with product listings, shopping cart, and payment processing.",
+                image: "https://via.placeholder.com/300x200?text=E-commerce",
+                date: "2023-05-15"
+            },
+            {
+                id: 2,
+                title: "Data Visualization Dashboard",
+                category: "Data Science",
+                description: "Interactive dashboard for visualizing complex datasets with various chart types and filtering options.",
+                image: "https://via.placeholder.com/300x200?text=Data+Viz",
+                date: "2023-06-20"
+            },
+            {
+                id: 3,
+                title: "Mobile App UI Design",
+                category: "UI/UX Design",
+                description: "User interface design for a fitness tracking mobile application with focus on usability and aesthetics.",
+                image: "https://via.placeholder.com/300x200?text=Mobile+UI",
+                date: "2023-07-10"
+            }
+        ];
+
+        // Load portfolio items
+        function loadPortfolioItems() {
+            const portfolioContainer = document.getElementById('portfolio-items');
+            portfolioContainer.innerHTML = '';
+            
+            portfolioItems.forEach(item => {
+                const col = document.createElement('div');
+                col.className = 'col-md-6 col-lg-4 mb-4';
+                
+                col.innerHTML = `
+                    <div class="card portfolio-item h-100">
+                        <img src="${item.image}" class="card-img-top" alt="${item.title}">
+                        <div class="card-body">
+                            <h5 class="card-title">${item.title}</h5>
+                            <span class="badge bg-primary mb-2">${item.category}</span>
+                            <p class="card-text">${item.description}</p>
+                            <small class="text-muted">Completed: ${new Date(item.date).toLocaleDateString()}</small>
+                        </div>
+                        <div class="card-footer bg-transparent">
+                            <button class="btn btn-sm btn-outline-primary me-2">View</button>
+                            <button class="btn btn-sm btn-outline-danger">Delete</button>
+                        </div>
+                    </div>
+                `;
+                
+                portfolioContainer.appendChild(col);
+            });
+        }
+
+        // Save new portfolio item
+        document.getElementById('save-portfolio-btn').addEventListener('click', function() {
+            const title = document.getElementById('portfolioTitle').value;
+            const category = document.getElementById('portfolioCategory').value;
+            const description = document.getElementById('portfolioDescription').value;
+            const image = document.getElementById('portfolioImage').value || `https://via.placeholder.com/300x200?text=${encodeURIComponent(title)}`;
+            const date = document.getElementById('portfolioDate').value;
+            
+            if (title && category && description && date) {
+                const newItem = {
+                    id: portfolioItems.length + 1,
+                    title,
+                    category,
+                    description,
+                    image,
+                    date
+                };
+                
+                portfolioItems.push(newItem);
+                
+                // Close modal and reset form
+                const modal = bootstrap.Modal.getInstance(document.getElementById('addPortfolioModal'));
+                modal.hide();
+                document.getElementById('add-portfolio-form').reset();
+                
+                // Reload portfolio items
+                loadPortfolioItems();
+            } else {
+                alert('Please fill all required fields');
+            }
+        });
+
+        // Profile form submission
+        document.getElementById('profile-form').addEventListener('submit', function(e) {
+            e.preventDefault();
+            
+            const firstName = document.getElementById('firstName').value;
+            const lastName = document.getElementById('lastName').value;
+            
+            // Update the username in the sidebar
+            document.getElementById('username-sidebar').textContent = `${firstName} ${lastName}`;
+            document.getElementById('profile-name').textContent = `${firstName} ${lastName}`;
+            
+            alert('Profile updated successfully!');
+        });
+
+        // Skill Visualization Code
+        // Sample initial skills data
+        let skills = [
+            { name: "JavaScript", level: 75, category: "technical", icon: "JS" },
+            { name: "HTML/CSS", level: 85, category: "technical", icon: "</>" },
+            { name: "Python", level: 60, category: "technical", icon: "Py" },
+            { name: "Communication", level: 80, category: "soft", icon: "💬" },
+            { name: "Teamwork", level: 90, category: "soft", icon: "👥" },
+            { name: "Problem Solving", level: 70, category: "soft", icon: "🧩" }
+        ];
+        
+        // DOM Elements
+        const skillsContainer = document.getElementById('skillsContainer');
+        const overallPercentage = document.getElementById('overallPercentage');
+        const addModal = document.getElementById('addModal');
+        const editModal = document.getElementById('editModal');
+        const addForm = document.getElementById('addForm');
+        const editForm = document.getElementById('editForm');
+        const closeModalBtns = document.querySelectorAll('.close-modal');
+        const editIndexInput = document.getElementById('editIndex');
+        const btnAddSkill = document.getElementById('btnAddSkill');
+        
+        // Initialize Chart.js
+        const ctx = document.getElementById('overallChart').getContext('2d');
+        let overallChart = new Chart(ctx, {
+            type: 'doughnut',
+            data: {
+                labels: ['Completed', 'Remaining'],
+                datasets: [{
+                    data: [0, 100],
+                    backgroundColor: [
+                        '#4361ee',
+                        '#f5f7fa'
+                    ],
+                    borderWidth: 0
+                }]
+            },
+            options: {
+                cutout: '70%',
+                responsive: true,
+                maintainAspectRatio: true,
+                plugins: {
+                    legend: {
+                        display: false
+                    },
+                    tooltip: {
+                        enabled: false
+                    }
+                }
+            }
+        });
+        
+        // Functions
+        function renderSkills() {
+            skillsContainer.innerHTML = '';
+            
+            if (skills.length === 0) {
+                skillsContainer.innerHTML = `
+                    <div class="col-12">
+                        <div class="empty-state">
+                            <i class="fas fa-clipboard-list"></i>
+                            <h3>No Skills Added Yet</h3>
+                            <p>Add your first skill to start tracking your progress</p>
+                            <button class="btn btn-primary" id="btnAddEmptySkill">
+                                <i class="fas fa-plus"></i> Add Your First Skill
+                            </button>
+                        </div>
+                    </div>
+                `;
+                
+                document.getElementById('btnAddEmptySkill').addEventListener('click', openAddModal);
+                overallPercentage.textContent = '0%';
+                overallChart.data.datasets[0].data = [0, 100];
+                overallChart.update();
+                return;
+            }
+            
+            skills.forEach((skill, index) => {
+                const col = document.createElement('div');
+                col.className = 'col-md-6 col-lg-4 mb-4';
+                
+                // Determine progress bar color based on level
+                let progressColor;
+                if (skill.level < 40) {
+                    progressColor = 'var(--danger-color)';
+                } else if (skill.level < 70) {
+                    progressColor = 'var(--warning-color)';
+                } else {
+                    progressColor = 'var(--success-color)';
+                }
+                
+                col.innerHTML = `
+                    <div class="skill-card">
+                        <button class="btn-delete" data-index="${index}">
+                            <i class="fas fa-times"></i>
+                        </button>
+                        <div class="skill-header">
+                            <div class="skill-title">${skill.name}</div>
+                            <div class="skill-icon">${skill.icon}</div>
+                        </div>
+                        <div class="skill-progress">
+                            <div class="skill-progress-bar" style="width: ${skill.level}%; background-color: ${progressColor};"></div>
+                        </div>
+                        <div class="skill-info">
+                            <span>${skill.category}</span>
+                            <span>${skill.level}% mastered</span>
+                        </div>
+                        <div class="skill-actions">
+                            <button class="btn btn-sm btn-increase" data-index="${index}">+</button>
+                            <button class="btn btn-sm btn-decrease" data-index="${index}">-</button>
+                            <button class="btn btn-sm btn-edit" data-index="${index}">Edit</button>
+                        </div>
+                    </div>
+                `;
+                
+                skillsContainer.appendChild(col);
+            });
+            
+            // Add event listeners to buttons
+            document.querySelectorAll('.btn-increase').forEach(btn => {
+                btn.addEventListener('click', (e) => {
+                    const index = e.target.getAttribute('data-index');
+                    increaseSkillLevel(index);
+                });
+            });
+            
+            document.querySelectorAll('.btn-decrease').forEach(btn => {
+                btn.addEventListener('click', (e) => {
+                    const index = e.target.getAttribute('data-index');
+                    decreaseSkillLevel(index);
+                });
+            });
+            
+            document.querySelectorAll('.btn-edit').forEach(btn => {
+                btn.addEventListener('click', (e) => {
+                    const index = e.target.getAttribute('data-index');
+                    openEditModal(index);
+                });
+            });
+            
+            document.querySelectorAll('.btn-delete').forEach(btn => {
+                btn.addEventListener('click', (e) => {
+                    const index = e.target.getAttribute('data-index');
+                    deleteSkill(index);
+                });
+            });
+            
+            updateOverallProgress();
+        }
+        
+        function increaseSkillLevel(index) {
+            if (skills[index].level < 100) {
+                skills[index].level += 5;
+                if (skills[index].level > 100) skills[index].level = 100;
+                renderSkills();
+            }
+        }
+        
+        function decreaseSkillLevel(index) {
+            if (skills[index].level > 0) {
+                skills[index].level -= 5;
+                if (skills[index].level < 0) skills[index].level = 0;
+                renderSkills();
+            }
+        }
+        
+        function deleteSkill(index) {
+            if (confirm('Are you sure you want to delete this skill?')) {
+                skills.splice(index, 1);
+                renderSkills();
+            }
+        }
+        
+        function openAddModal() {
+            addForm.reset();
+            addModal.style.display = 'flex';
+        }
+        
+        function openEditModal(index) {
+            const skill = skills[index];
+            editIndexInput.value = index;
+            document.getElementById('editSkillName').value = skill.name;
+            document.getElementById('editSkillLevel').value = skill.level;
+            document.getElementById('editSkillCategory').value = skill.category;
+            document.getElementById('editSkillIcon').value = skill.icon;
+            editModal.style.display = 'flex';
+        }
+        
+        function closeModals() {
+            addModal.style.display = 'none';
+            editModal.style.display = 'none';
+        }
+        
+        function updateOverallProgress() {
+            const totalLevel = skills.reduce((sum, skill) => sum + skill.level, 0);
+            const averageLevel = Math.round(totalLevel / skills.length);
+            
+            overallPercentage.textContent = `${averageLevel}%`;
+            
+            // Update chart
+            overallChart.data.datasets[0].data = [averageLevel, 100 - averageLevel];
+            overallChart.update();
+        }
+        
+        // Event Listeners
+        btnAddSkill.addEventListener('click', openAddModal);
+        
+        closeModalBtns.forEach(btn => {
+            btn.addEventListener('click', closeModals);
+        });
+        
+        addForm.addEventListener('submit', (e) => {
+            e.preventDefault();
+            
+            const newSkill = {
+                name: document.getElementById('addSkillName').value,
+                level: parseInt(document.getElementById('addSkillLevel').value),
+                category: document.getElementById('addSkillCategory').value,
+                icon: document.getElementById('addSkillIcon').value
+            };
+            
+            skills.push(newSkill);
+            renderSkills();
+            closeModals();
+        });
+        
+        editForm.addEventListener('submit', (e) => {
+            e.preventDefault();
+            
+            const index = editIndexInput.value;
+            skills[index].name = document.getElementById('editSkillName').value;
+            skills[index].level = parseInt(document.getElementById('editSkillLevel').value);
+            skills[index].category = document.getElementById('editSkillCategory').value;
+            skills[index].icon = document.getElementById('editSkillIcon').value;
+            
+            renderSkills();
+            closeModals();
+        });
+        
+        // Close modals when clicking outside
+        window.addEventListener('click', (e) => {
+            if (e.target === addModal || e.target === editModal) {
+                closeModals();
+            }
+        });
+
+        // Initialize with dashboard shown
+        showSection('dashboard-section');
+    </script>
+</body>
+</html>
