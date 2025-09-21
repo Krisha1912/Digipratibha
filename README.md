@@ -1,7 +1,9 @@
 DigiPratibha 🌟
+
 📌 Purpose
 
 DigiPratibha is a smart platform designed for students to build professional portfolios and get AI-powered study help.
+
 
 🚀 Features
 
@@ -14,6 +16,7 @@ DigiPratibha is a smart platform designed for students to build professional por
 🌗 Light/Dark theme toggle
 
 📚 Smart student assistant
+
 
 🛠️ Technologies Used
 
